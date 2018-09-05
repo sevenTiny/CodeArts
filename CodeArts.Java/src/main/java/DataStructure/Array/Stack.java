@@ -16,7 +16,7 @@ package DataStructure.Array;
 
 public class Stack {
 
-    private Object[] elementData;
+    private  Object[] elementData;
     public int length = 0;
     private int space = 0;
     private int index = 0;
