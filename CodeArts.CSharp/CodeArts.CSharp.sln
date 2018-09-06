@@ -11,15 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeArts.Topic", "CodeArts.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{D21BDAEB-0791-4CBC-BA03-599A39515FB9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Topic", "Test.Topic\Test.Topic.csproj", "{C5F7D69C-2397-412D-ABF5-C1EE5F4D8322}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Topic", "Tests\Test.Topic\Test.Topic.csproj", "{C5F7D69C-2397-412D-ABF5-C1EE5F4D8322}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeArts.Knowledge", "CodeArts.Knowledge\CodeArts.Knowledge.csproj", "{542A0D0D-A221-47C0-AA57-D08E678157F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeArts.Knowledge", "CodeArts.Knowledge\CodeArts.Knowledge.csproj", "{542A0D0D-A221-47C0-AA57-D08E678157F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Knowledge", "Test.Knowledge\Test.Knowledge.csproj", "{25A68797-5431-49DF-997F-BA205503F321}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Knowledge", "Tests\Test.Knowledge\Test.Knowledge.csproj", "{25A68797-5431-49DF-997F-BA205503F321}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Arithmetic", "Test.Arithmetic\Test.Arithmetic.csproj", "{411A761C-0457-4146-8673-FEC8B5935524}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Arithmetic", "Tests\Test.Arithmetic\Test.Arithmetic.csproj", "{411A761C-0457-4146-8673-FEC8B5935524}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.DataStructure", "Test.DataStructure\Test.DataStructure.csproj", "{FC28202C-8411-486C-ACD1-67593D623752}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.DataStructure", "Tests\Test.DataStructure\Test.DataStructure.csproj", "{FC28202C-8411-486C-ACD1-67593D623752}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
