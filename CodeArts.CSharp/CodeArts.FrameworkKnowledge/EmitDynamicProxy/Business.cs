@@ -10,11 +10,17 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
     public interface IBusiness
     {
         void Test();
+        int GetAge(int age);
     }
 
     public class Business : IBusiness
     {
-        public virtual void Test()
+        public int GetAge(int age)
+        {
+            return age;
+        }
+
+        public void Test()
         {
             Trace.WriteLine("this a test ...");
         }

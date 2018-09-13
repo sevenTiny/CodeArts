@@ -12,7 +12,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 {
     public class DynamicProxy
     {
-        public static T Inject<T>() where T : class, new()
+        public static IInterface Inject<IInterface, T>() where T : class, new() where IInterface : class
         {
             string nameOfAssembly = typeof(T).Name + "ProxyAssembly";
             string nameOfModule = typeof(T).Name + "ProxyModule";
@@ -24,7 +24,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
             var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
             var moduleBuilder = assembly.DefineDynamicModule(nameOfModule, nameOfAssembly + ".dll");
 
-            var typeBuilder = moduleBuilder.DefineType(nameOfType, TypeAttributes.Public, typeof(T));
+            var typeBuilder = moduleBuilder.DefineType(nameOfType, TypeAttributes.Public, null, new[] { typeof(IInterface) });
 
             InjectInterceptor<T>(typeBuilder);
 
@@ -32,7 +32,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
             assembly.Save(nameOfAssembly + ".dll");
 
-            return Activator.CreateInstance(t) as T;
+            return Activator.CreateInstance(t) as IInterface;
         }
 
         private static void InjectInterceptor<T>(TypeBuilder typeBuilder)
@@ -60,7 +60,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                 var method = methodsOfType[i];
                 var methodParameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
 
-                var methodBuilder = typeBuilder.DefineMethod(method.Name, MethodAttributes.Public | MethodAttributes.Virtual, CallingConventions.Standard, method.ReturnType, methodParameterTypes);
+                var methodBuilder = typeBuilder.DefineMethod(method.Name, MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.Virtual | MethodAttributes.Final, CallingConventions.Standard, method.ReturnType, methodParameterTypes);
 
                 var ilMethod = methodBuilder.GetILGenerator();
                 ilMethod.Emit(OpCodes.Ldarg_0);
@@ -87,6 +87,9 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                         ilMethod.Emit(OpCodes.Ldloc, parameters);
                         ilMethod.Emit(OpCodes.Ldc_I4, j);
                         ilMethod.Emit(OpCodes.Ldarg, j + 1);
+                        //box
+                        ilMethod.Emit(OpCodes.Box, method.ReturnType);
+
                         ilMethod.Emit(OpCodes.Stelem_Ref);
                     }
                     ilMethod.Emit(OpCodes.Ldloc, parameters);
@@ -100,12 +103,20 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                 {
                     ilMethod.Emit(OpCodes.Pop);
                 }
+                else
+                {
+                    //unbox
+                    ilMethod.Emit(OpCodes.Unbox_Any, method.ReturnType);
+                    ilMethod.Emit(OpCodes.Stloc_0);
+                    ilMethod.Emit(OpCodes.Ldloc_0);
+                }
 
                 // complete
                 ilMethod.Emit(OpCodes.Ret);
             }
         }
     }
+
     public class Interceptor
     {
         public object Invoke(object @object, string @method, object[] parameters)
@@ -120,4 +131,39 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
         }
     }
 
+    public abstract class DynamicDelegate
+    {
+        public virtual T Execute<T>(Func<T> func)
+        {
+            Trace.WriteLine("interceptor does something before invoke [{0}]...");
+
+            var a = func();
+
+            Trace.WriteLine("interceptor does something before invoke [{0}]...");
+
+            return a;
+        }
+    }
+
+    public class BusinessProxy : IBusiness
+    {
+        private Interceptor _interceptor = new Interceptor();
+
+        public int GetAge(int num)
+        {
+            return (int)this._interceptor.Invoke(new Business(), "GetAge", new object[]
+            {
+            num
+            });
+        }
+
+        public void Test()
+        {
+            Interceptor arg_1C_0 = this._interceptor;
+            object arg_1C_1 = new Business();
+            string arg_1C_2 = "Test";
+            object[] parameters = new object[0];
+            arg_1C_0.Invoke(arg_1C_1, arg_1C_2, parameters);
+        }
+    }
 }
