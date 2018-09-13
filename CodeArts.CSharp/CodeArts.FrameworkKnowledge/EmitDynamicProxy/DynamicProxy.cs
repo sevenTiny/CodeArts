@@ -8,14 +8,11 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeArts.FrameworkKnowledge
+namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 {
-    public class EmitDynamicProxy
+    public class DynamicProxy
     {
-    }
-    public class Proxy
-    {
-        public static T Of<T>() where T : class, new()
+        public static T Inject<T>() where T : class, new()
         {
             string nameOfAssembly = typeof(T).Name + "ProxyAssembly";
             string nameOfModule = typeof(T).Name + "ProxyModule";
@@ -123,30 +120,4 @@ namespace CodeArts.FrameworkKnowledge
         }
     }
 
-    public interface IBusiness
-    {
-        void Test();
-    }
-
-    public class Business : IBusiness
-    {
-        public virtual void Test()
-        {
-            Trace.WriteLine("this a test ...");
-        }
-    }
-
-    public class BusinessProxy : Business
-    {
-        private Interceptor _interceptor = new Interceptor();
-
-        public new void Test()
-        {
-            Interceptor arg_1C_0 = this._interceptor;
-            object arg_1C_1 = new Business();
-            string arg_1C_2 = "Test";
-            object[] parameters = new object[0];
-            arg_1C_0.Invoke(arg_1C_1, arg_1C_2, parameters);
-        }
-    }
 }

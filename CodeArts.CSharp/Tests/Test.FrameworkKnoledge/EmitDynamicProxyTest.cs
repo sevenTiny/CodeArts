@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeArts.FrameworkKnowledge;
+using CodeArts.FrameworkKnowledge.EmitDynamicProxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test.FrameworkKnoledge
@@ -10,12 +11,9 @@ namespace Test.FrameworkKnoledge
         [TestMethod]
         public void TestMethod1()
         {
-            Business business = Proxy.Of<Business>();
+            Business business = DynamicProxy.Inject<Business>();
             business.Test();
             //Business.Instance.Test();
-
-            BusinessProxy p = new BusinessProxy();
-            p.Test();
         }
     }
 }
