@@ -131,20 +131,6 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
         }
     }
 
-    public abstract class DynamicDelegate
-    {
-        public virtual T Execute<T>(Func<T> func)
-        {
-            Trace.WriteLine("interceptor does something before invoke [{0}]...");
-
-            var a = func();
-
-            Trace.WriteLine("interceptor does something before invoke [{0}]...");
-
-            return a;
-        }
-    }
-
     public class BusinessProxy : IBusiness
     {
         private Interceptor _interceptor = new Interceptor();

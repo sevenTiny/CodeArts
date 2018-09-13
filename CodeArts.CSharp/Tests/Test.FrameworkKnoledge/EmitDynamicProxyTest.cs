@@ -15,10 +15,6 @@ namespace Test.FrameworkKnoledge
             business.Test();
             business.GetAge(888);
             //Business.Instance.Test();
-
-            BusinessProxy b = new BusinessProxy();
-            b.Test();
-            b.GetAge(888);
         }
     }
 }
