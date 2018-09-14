@@ -48,11 +48,10 @@ namespace Test.FrameworkKnoledge.EmitDynamicProxy
         }
 
         [TestMethod]
-        public void FaultTolerant()
+        [Description("实现方式动态代理")]
+        public void FaultTolerantOfRealize()
         {
-            IBusinessClass Instance = DynamicProxy.Create<IBusinessClass, BusinessClass, DynamicProxyInterceptor>();
-
-            //IBusinessClass Instance = new BusinessClassProxy();
+            IBusinessClass Instance = DynamicProxy.CreateProxyOfRealize<IBusinessClass, BusinessClass, DynamicProxyInterceptor>();
 
             Instance.Test();
             Instance.GetBool(false);
@@ -65,6 +64,32 @@ namespace Test.FrameworkKnoledge.EmitDynamicProxy
             Instance.GetOperateResults(new List<OperateResult>());
             Instance.GetDecimal(123.123m);
             Instance.GetDateTime(DateTime.Now);
+        }
+
+        [TestMethod]
+        [Description("继承方式动态代理")]
+        public void FualtTolerantOfInherit()
+        {
+            IBusinessClass Instance = DynamicProxy.CreateProxyOfInherit<BusinessClassVirtual, DynamicProxyInterceptor>();
+
+            Instance.Test();
+            Instance.GetBool(false);
+            Instance.GetInt(123);
+            Instance.GetFloat(123f);
+            Instance.GetDouble(123.123);
+            Instance.GetString("123");
+            Instance.GetObject(null);
+            Instance.GetOperateResult(123, "123");
+            Instance.GetOperateResults(new List<OperateResult>());
+            Instance.GetDecimal(123.123m);
+            Instance.GetDateTime(DateTime.Now);
+        }
+
+        [TestMethod]
+        public void ExceptionFilter()
+        {
+            IBusinessClass Instance = DynamicProxy.CreateProxyOfRealize<IBusinessClass, BusinessClass, DynamicProxyInterceptor>();
+            Instance.ThrowException();
         }
     }
 }

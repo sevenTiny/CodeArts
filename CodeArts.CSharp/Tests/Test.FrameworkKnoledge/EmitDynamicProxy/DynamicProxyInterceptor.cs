@@ -7,11 +7,20 @@ namespace Test.FrameworkKnoledge.EmitDynamicProxy
     {
         public override object Invoke(object @object, string method, object[] parameters)
         {
-            //Trace.WriteLine(string.Format("interceptor does something before invoke [{0}]...", @method));
+            Trace.WriteLine(string.Format("interceptor does something before invoke [{0}]...", @method));
 
-            var obj = base.Invoke(@object, method, parameters);
+            object obj = null;
 
-            //Trace.WriteLine(string.Format("interceptor does something after invoke [{0}]...", @method));
+            try
+            {
+                obj = base.Invoke(@object, method, parameters);
+            }
+            catch (System.Exception ex)
+            {
+                Trace.WriteLine(ex.ToString());
+            }
+
+            Trace.WriteLine(string.Format("interceptor does something after invoke [{0}]...", @method));
 
             return obj;
         }
