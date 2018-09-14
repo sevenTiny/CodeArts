@@ -36,11 +36,11 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
             var assemblyName = new AssemblyName(nameOfAssembly);
 
-            //var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
-            //var moduleBuilder = assembly.DefineDynamicModule(nameOfModule);
+            var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+            var moduleBuilder = assembly.DefineDynamicModule(nameOfModule);
 
-            var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
-            var moduleBuilder = assembly.DefineDynamicModule(nameOfModule, nameOfAssembly + ".dll");
+            //var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
+            //var moduleBuilder = assembly.DefineDynamicModule(nameOfModule, nameOfAssembly + ".dll");
 
             TypeBuilder typeBuilder;
             if (inheritMode)
@@ -52,7 +52,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
             var t = typeBuilder.CreateType();
 
-            assembly.Save(nameOfAssembly + ".dll");
+            //assembly.Save(nameOfAssembly + ".dll");
 
             return Activator.CreateInstance(t) as TInterface;
         }
