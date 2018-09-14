@@ -27,11 +27,11 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
             var assemblyName = new AssemblyName(nameOfAssembly);
 
-            //var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
-            //var moduleBuilder = assembly.DefineDynamicModule(nameOfModule);
+            var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+            var moduleBuilder = assembly.DefineDynamicModule(nameOfModule);
 
-            var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
-            var moduleBuilder = assembly.DefineDynamicModule(nameOfModule, nameOfAssembly + ".dll");
+            //var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
+            //var moduleBuilder = assembly.DefineDynamicModule(nameOfModule, nameOfAssembly + ".dll");
 
             var typeBuilder = moduleBuilder.DefineType(nameOfType, TypeAttributes.Public, null, new[] { typeof(TInterface) });
 
@@ -39,7 +39,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
             var t = typeBuilder.CreateType();
 
-            assembly.Save(nameOfAssembly + ".dll");
+            //assembly.Save(nameOfAssembly + ".dll");
 
             return Activator.CreateInstance(t) as TInterface;
         }
@@ -105,7 +105,6 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                         ilMethod.Emit(OpCodes.Ldarg, j + 1);
                         //box
                         ilMethod.Emit(OpCodes.Box, methodParameterTypes[j]);
-
                         ilMethod.Emit(OpCodes.Stelem_Ref);
                     }
                     ilMethod.Emit(OpCodes.Ldloc, parameters);
@@ -122,9 +121,16 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                 else
                 {
                     //unbox
-                    ilMethod.Emit(OpCodes.Unbox_Any, method.ReturnType);
-                    ilMethod.Emit(OpCodes.Stloc_0);
+                    if (method.ReturnType.IsValueType)
+                    {
+                        ilMethod.Emit(OpCodes.Unbox_Any, method.ReturnType);
+                    }
+                    else
+                    {
+                        ilMethod.Emit(OpCodes.Castclass, method.ReturnType);
+                    }
                     ilMethod.Emit(OpCodes.Ldloc_0);
+                    ilMethod.Emit(OpCodes.Stloc_0);
                 }
 
                 // complete

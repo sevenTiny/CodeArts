@@ -9,7 +9,7 @@ namespace Test.FrameworkKnoledge.EmitDynamicProxy
     {
         public override void Before()
         {
-            Trace.WriteLine("Attribute Before");
+           // Trace.WriteLine("Attribute Before");
         }
     }
 }
