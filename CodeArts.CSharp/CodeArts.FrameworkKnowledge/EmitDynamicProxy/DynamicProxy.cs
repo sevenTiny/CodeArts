@@ -55,9 +55,8 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
             var methodsOfType = typeof(T).GetMethods(BindingFlags.Public | BindingFlags.Instance);
 
-            for (var i = 0; i < methodsOfType.Length; i++)
+            foreach (var method in methodsOfType)
             {
-                var method = methodsOfType[i];
                 var methodParameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
 
                 var methodBuilder = typeBuilder.DefineMethod(method.Name, MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.Virtual | MethodAttributes.Final, CallingConventions.Standard, method.ReturnType, methodParameterTypes);
