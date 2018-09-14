@@ -3,7 +3,7 @@ using CodeArts.FrameworkKnowledge;
 using CodeArts.FrameworkKnowledge.EmitDynamicProxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Test.FrameworkKnoledge
+namespace Test.FrameworkKnoledge.EmitDynamicProxy
 {
     [TestClass]
     public class EmitDynamicProxyTest
@@ -11,10 +11,10 @@ namespace Test.FrameworkKnoledge
         [TestMethod]
         public void TestMethod1()
         {
-            IBusiness business = DynamicProxy.Create<IBusiness, Business>();
-            business.Test();
-            business.GetAge(888);
-            //Business.Instance.Test();
+            var instance = BusinessClass.Instance;
+            instance.Test();
+            var result = instance.GetOperateResult(111, "333");
+            int intResult = instance.GetAge(222);
         }
     }
 }

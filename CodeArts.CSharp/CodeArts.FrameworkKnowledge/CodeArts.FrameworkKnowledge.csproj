@@ -41,8 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmitDynamicProxy\Business.cs" />
     <Compile Include="EmitDynamicProxy\DynamicProxy.cs" />
+    <Compile Include="EmitDynamicProxy\DynamicProxyActionBaseAttribute.cs" />
+    <Compile Include="EmitDynamicProxy\DynamicProxyInterceptorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

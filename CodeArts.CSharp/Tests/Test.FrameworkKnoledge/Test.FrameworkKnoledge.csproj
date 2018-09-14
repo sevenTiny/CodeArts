@@ -49,7 +49,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmitDynamicProxyTest.cs" />
+    <Compile Include="EmitDynamicProxy\BusinessClass.cs" />
+    <Compile Include="EmitDynamicProxy\DynamicProxyActionAttribute.cs" />
+    <Compile Include="EmitDynamicProxy\DynamicProxyInterceptor.cs" />
+    <Compile Include="EmitDynamicProxy\EmitDynamicProxyTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

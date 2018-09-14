@@ -1,45 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 {
     public class DynamicProxy
     {
-        public static IInterface Create<IInterface, T>() where T : class, new() where IInterface : class
+        public static TInterface Create<TInterface, TImp, TInterceptor>() where TImp : class, new() where TInterface : class where TInterceptor : DynamicProxyInterceptorBase
         {
-            string nameOfAssembly = typeof(T).Name + "ProxyAssembly";
-            string nameOfModule = typeof(T).Name + "ProxyModule";
-            string nameOfType = typeof(T).Name + "Proxy";
+            return Invoke<TInterface, TImp, TInterceptor>();
+        }
+
+        public static TInterface Create<TInterface, TImp, TInterceptor, TActionAttribute>() where TImp : class, new() where TInterface : class where TInterceptor : DynamicProxyInterceptorBase where TActionAttribute : DynamicProxyActionBaseAttribute
+        {
+            return Invoke<TInterface, TImp, TInterceptor>(typeof(TActionAttribute));
+        }
+
+        private static TInterface Invoke<TInterface, TImp, TInterceptor>(Type actionAttributeType = null) where TImp : class, new() where TInterface : class where TInterceptor : DynamicProxyInterceptorBase
+        {
+            var impType = typeof(TImp);
+
+            string nameOfAssembly = impType.Name + "ProxyAssembly";
+            string nameOfModule = impType.Name + "ProxyModule";
+            string nameOfType = impType.Name + "Proxy";
 
             var assemblyName = new AssemblyName(nameOfAssembly);
+
             //var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
             //var moduleBuilder = assembly.DefineDynamicModule(nameOfModule);
+
             var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
             var moduleBuilder = assembly.DefineDynamicModule(nameOfModule, nameOfAssembly + ".dll");
 
-            var typeBuilder = moduleBuilder.DefineType(nameOfType, TypeAttributes.Public, null, new[] { typeof(IInterface) });
+            var typeBuilder = moduleBuilder.DefineType(nameOfType, TypeAttributes.Public, null, new[] { typeof(TInterface) });
 
-            InjectInterceptor<T>(typeBuilder);
+            InjectInterceptor<TImp, TInterceptor>(typeBuilder, actionAttributeType);
 
             var t = typeBuilder.CreateType();
 
             assembly.Save(nameOfAssembly + ".dll");
 
-            return Activator.CreateInstance(t) as IInterface;
+            return Activator.CreateInstance(t) as TInterface;
         }
 
-        private static void InjectInterceptor<T>(TypeBuilder typeBuilder)
+        private static void InjectInterceptor<TImp, TInterceptor>(TypeBuilder typeBuilder, Type actionAttributeType = null)
         {
+            var interceptorType = typeof(TInterceptor);
             // ---- define fields ----
 
-            var fieldInterceptor = typeBuilder.DefineField("_interceptor", typeof(Interceptor), FieldAttributes.Private);
+            var fieldInterceptor = typeBuilder.DefineField("_interceptor", interceptorType, FieldAttributes.Private);
 
             // ---- define costructors ----
 
@@ -47,13 +57,13 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
             var ilOfCtor = constructorBuilder.GetILGenerator();
 
             ilOfCtor.Emit(OpCodes.Ldarg_0);
-            ilOfCtor.Emit(OpCodes.Newobj, typeof(Interceptor).GetConstructor(new Type[0]));
+            ilOfCtor.Emit(OpCodes.Newobj, interceptorType.GetConstructor(new Type[0]));
             ilOfCtor.Emit(OpCodes.Stfld, fieldInterceptor);
             ilOfCtor.Emit(OpCodes.Ret);
 
             // ---- define methods ----
 
-            var methodsOfType = typeof(T).GetMethods(BindingFlags.Public | BindingFlags.Instance);
+            var methodsOfType = typeof(TImp).GetMethods(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var method in methodsOfType)
             {
@@ -62,11 +72,18 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                 var methodBuilder = typeBuilder.DefineMethod(method.Name, MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.Virtual | MethodAttributes.Final, CallingConventions.Standard, method.ReturnType, methodParameterTypes);
 
                 var ilMethod = methodBuilder.GetILGenerator();
+
+                if (actionAttributeType != null && method.GetCustomAttribute(actionAttributeType) != null)
+                {
+                    ilMethod.Emit(OpCodes.Newobj, actionAttributeType.GetConstructor(new Type[0]));
+                    ilMethod.Emit(OpCodes.Call, actionAttributeType.GetMethod("Before"));
+                }
+
                 ilMethod.Emit(OpCodes.Ldarg_0);
                 ilMethod.Emit(OpCodes.Ldfld, fieldInterceptor);
 
                 // create instance of T
-                ilMethod.Emit(OpCodes.Newobj, typeof(T).GetConstructor(new Type[0]));
+                ilMethod.Emit(OpCodes.Newobj, typeof(TImp).GetConstructor(new Type[0]));
                 ilMethod.Emit(OpCodes.Ldstr, method.Name);
 
                 // build the method parameters
@@ -87,7 +104,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                         ilMethod.Emit(OpCodes.Ldc_I4, j);
                         ilMethod.Emit(OpCodes.Ldarg, j + 1);
                         //box
-                        ilMethod.Emit(OpCodes.Box, method.ReturnType);
+                        ilMethod.Emit(OpCodes.Box, methodParameterTypes[j]);
 
                         ilMethod.Emit(OpCodes.Stelem_Ref);
                     }
@@ -95,7 +112,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                 }
 
                 // call Invoke() method of Interceptor
-                ilMethod.Emit(OpCodes.Callvirt, typeof(Interceptor).GetMethod("Invoke"));
+                ilMethod.Emit(OpCodes.Callvirt, interceptorType.GetMethod("Invoke"));
 
                 // pop the stack if return void
                 if (method.ReturnType == typeof(void))
@@ -113,42 +130,6 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                 // complete
                 ilMethod.Emit(OpCodes.Ret);
             }
-        }
-    }
-
-    public class Interceptor
-    {
-        public object Invoke(object @object, string @method, object[] parameters)
-        {
-            Trace.WriteLine(string.Format("interceptor does something before invoke [{0}]...", @method));
-
-            var retobj = @object.GetType().GetMethod(@method).Invoke(@object, parameters);
-
-            Trace.WriteLine(string.Format("interceptor does something after invoke [{0}]...", @method));
-
-            return retobj;
-        }
-    }
-
-    public class BusinessProxy : IBusiness
-    {
-        private Interceptor _interceptor = new Interceptor();
-
-        public int GetAge(int num)
-        {
-            return (int)this._interceptor.Invoke(new Business(), "GetAge", new object[]
-            {
-            num
-            });
-        }
-
-        public void Test()
-        {
-            Interceptor arg_1C_0 = this._interceptor;
-            object arg_1C_1 = new Business();
-            string arg_1C_2 = "Test";
-            object[] parameters = new object[0];
-            arg_1C_0.Invoke(arg_1C_1, arg_1C_2, parameters);
         }
     }
 }
