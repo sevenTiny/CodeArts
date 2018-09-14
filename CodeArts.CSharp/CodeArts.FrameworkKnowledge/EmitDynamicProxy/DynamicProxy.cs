@@ -12,7 +12,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 {
     public class DynamicProxy
     {
-        public static IInterface Inject<IInterface, T>() where T : class, new() where IInterface : class
+        public static IInterface Create<IInterface, T>() where T : class, new() where IInterface : class
         {
             string nameOfAssembly = typeof(T).Name + "ProxyAssembly";
             string nameOfModule = typeof(T).Name + "ProxyModule";

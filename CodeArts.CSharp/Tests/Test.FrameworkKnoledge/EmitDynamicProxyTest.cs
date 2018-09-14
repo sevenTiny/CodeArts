@@ -11,7 +11,7 @@ namespace Test.FrameworkKnoledge
         [TestMethod]
         public void TestMethod1()
         {
-            IBusiness business = DynamicProxy.Inject<IBusiness, Business>();
+            IBusiness business = DynamicProxy.Create<IBusiness, Business>();
             business.Test();
             business.GetAge(888);
             //Business.Instance.Test();
