@@ -19,11 +19,11 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
         public static TProxyClass CreateProxyOfInherit<TProxyClass, TInterceptor>() where TProxyClass : class, new() where TInterceptor : DynamicProxyInterceptorBase
         {
-            return Invoke<TProxyClass, TProxyClass, TInterceptor>(null,true);
+            return Invoke<TProxyClass, TProxyClass, TInterceptor>(null, true);
         }
-        public static TProxyClass CreateProxyOfInherit<TProxyClass, TInterceptor, TActionAttribute>()  where TProxyClass : class,new() where TInterceptor : DynamicProxyInterceptorBase where TActionAttribute : DynamicProxyActionBaseAttribute
+        public static TProxyClass CreateProxyOfInherit<TProxyClass, TInterceptor, TActionAttribute>() where TProxyClass : class, new() where TInterceptor : DynamicProxyInterceptorBase where TActionAttribute : DynamicProxyActionBaseAttribute
         {
-            return Invoke<TProxyClass, TProxyClass, TInterceptor>(typeof(TActionAttribute),true);
+            return Invoke<TProxyClass, TProxyClass, TInterceptor>(typeof(TActionAttribute), true);
         }
 
         private static TInterface Invoke<TInterface, TImp, TInterceptor>(Type actionAttributeType = null, bool inheritMode = false) where TImp : class, new() where TInterface : class where TInterceptor : DynamicProxyInterceptorBase
@@ -48,7 +48,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
             else
                 typeBuilder = moduleBuilder.DefineType(nameOfType, TypeAttributes.Public, null, new[] { typeof(TInterface) });
 
-            InjectInterceptor<TImp, TInterceptor>(typeBuilder, actionAttributeType,inheritMode);
+            InjectInterceptor<TImp, TInterceptor>(typeBuilder, actionAttributeType, inheritMode);
 
             var t = typeBuilder.CreateType();
 
