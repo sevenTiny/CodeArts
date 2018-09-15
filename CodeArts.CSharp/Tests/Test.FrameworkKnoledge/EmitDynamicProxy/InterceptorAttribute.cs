@@ -1,9 +1,11 @@
 ﻿using CodeArts.FrameworkKnowledge.EmitDynamicProxy;
+using System;
 using System.Diagnostics;
 
 namespace Test.FrameworkKnoledge.EmitDynamicProxy
 {
-    public class DynamicProxyInterceptor: DynamicProxyInterceptorBase
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    public class InterceptorAttribute : InterceptorBaseAttribute
     {
         public override object Invoke(object @object, string method, object[] parameters)
         {

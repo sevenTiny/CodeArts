@@ -7,26 +7,17 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 {
     public class DynamicProxy
     {
-        public static TInterface CreateProxyOfRealize<TInterface, TImp, TInterceptor>() where TImp : class, new() where TInterface : class where TInterceptor : DynamicProxyInterceptorBase
+        public static TInterface CreateProxyOfRealize<TInterface, TImp>() where TImp : class, new() where TInterface : class
         {
-            return Invoke<TInterface, TImp, TInterceptor>();
+            return Invoke<TInterface, TImp>();
         }
 
-        public static TInterface CreateProxyOfRealize<TInterface, TImp, TInterceptor, TActionAttribute>() where TImp : class, new() where TInterface : class where TInterceptor : DynamicProxyInterceptorBase where TActionAttribute : DynamicProxyActionBaseAttribute
+        public static TProxyClass CreateProxyOfInherit<TProxyClass>() where TProxyClass : class, new()
         {
-            return Invoke<TInterface, TImp, TInterceptor>(typeof(TActionAttribute));
+            return Invoke<TProxyClass, TProxyClass>(true);
         }
 
-        public static TProxyClass CreateProxyOfInherit<TProxyClass, TInterceptor>() where TProxyClass : class, new() where TInterceptor : DynamicProxyInterceptorBase
-        {
-            return Invoke<TProxyClass, TProxyClass, TInterceptor>(null, true);
-        }
-        public static TProxyClass CreateProxyOfInherit<TProxyClass, TInterceptor, TActionAttribute>() where TProxyClass : class, new() where TInterceptor : DynamicProxyInterceptorBase where TActionAttribute : DynamicProxyActionBaseAttribute
-        {
-            return Invoke<TProxyClass, TProxyClass, TInterceptor>(typeof(TActionAttribute), true);
-        }
-
-        private static TInterface Invoke<TInterface, TImp, TInterceptor>(Type actionAttributeType = null, bool inheritMode = false) where TImp : class, new() where TInterface : class where TInterceptor : DynamicProxyInterceptorBase
+        private static TInterface Invoke<TInterface, TImp>(bool inheritMode = false) where TImp : class, new() where TInterface : class
         {
             var impType = typeof(TImp);
 
@@ -48,7 +39,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
             else
                 typeBuilder = moduleBuilder.DefineType(nameOfType, TypeAttributes.Public, null, new[] { typeof(TInterface) });
 
-            InjectInterceptor<TImp, TInterceptor>(typeBuilder, actionAttributeType, inheritMode);
+            InjectInterceptor<TImp>(typeBuilder, impType.GetCustomAttribute(typeof(InterceptorBaseAttribute))?.GetType(), inheritMode);
 
             var t = typeBuilder.CreateType();
 
@@ -57,26 +48,30 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
             return Activator.CreateInstance(t) as TInterface;
         }
 
-        private static void InjectInterceptor<TImp, TInterceptor>(TypeBuilder typeBuilder, Type actionAttributeType = null, bool inheritMode = false)
+        private static void InjectInterceptor<TImp>(TypeBuilder typeBuilder, Type interceptorAttributeType, bool inheritMode = false)
         {
-            var interceptorType = typeof(TInterceptor);
+            var impType = typeof(TImp);
             // ---- define fields ----
-
-            var fieldInterceptor = typeBuilder.DefineField("_interceptor", interceptorType, FieldAttributes.Private);
-
+            FieldBuilder fieldInterceptor = null;
+            if (interceptorAttributeType != null)
+            {
+                fieldInterceptor = typeBuilder.DefineField("_interceptor", interceptorAttributeType, FieldAttributes.Private);
+            }
             // ---- define costructors ----
+            if (interceptorAttributeType != null)
+            {
+                var constructorBuilder = typeBuilder.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, null);
+                var ilOfCtor = constructorBuilder.GetILGenerator();
 
-            var constructorBuilder = typeBuilder.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, null);
-            var ilOfCtor = constructorBuilder.GetILGenerator();
-
-            ilOfCtor.Emit(OpCodes.Ldarg_0);
-            ilOfCtor.Emit(OpCodes.Newobj, interceptorType.GetConstructor(new Type[0]));
-            ilOfCtor.Emit(OpCodes.Stfld, fieldInterceptor);
-            ilOfCtor.Emit(OpCodes.Ret);
+                ilOfCtor.Emit(OpCodes.Ldarg_0);
+                ilOfCtor.Emit(OpCodes.Newobj, interceptorAttributeType.GetConstructor(new Type[0]));
+                ilOfCtor.Emit(OpCodes.Stfld, fieldInterceptor);
+                ilOfCtor.Emit(OpCodes.Ret);
+            }
 
             // ---- define methods ----
 
-            var methodsOfType = typeof(TImp).GetMethods(BindingFlags.Public | BindingFlags.Instance);
+            var methodsOfType = impType.GetMethods(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var method in methodsOfType)
             {
@@ -93,31 +88,39 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
                 var ilMethod = methodBuilder.GetILGenerator();
 
-                if (actionAttributeType != null && method.GetCustomAttribute(actionAttributeType) != null)
+                // set local field
+                var impObj = ilMethod.DeclareLocal(impType);                //instance of imp object
+                var methodName = ilMethod.DeclareLocal(typeof(string));     //instance of method name
+                var parameters = ilMethod.DeclareLocal(typeof(object[]));   //instance of parameters
+                var result = ilMethod.DeclareLocal(typeof(object));         //instance of result
+                LocalBuilder actionAttributeObj = null;
+
+                //attribute init
+                Type actionAttributeType = null;
+                if (method.GetCustomAttribute(typeof(ActionBaseAttribute)) != null)
                 {
+                    actionAttributeType = method.GetCustomAttribute(typeof(ActionBaseAttribute)).GetType();
+
+                    actionAttributeObj = ilMethod.DeclareLocal(actionAttributeType);
                     ilMethod.Emit(OpCodes.Newobj, actionAttributeType.GetConstructor(new Type[0]));
-                    ilMethod.Emit(OpCodes.Call, actionAttributeType.GetMethod("Before"));
+                    ilMethod.Emit(OpCodes.Stloc, actionAttributeObj);
                 }
 
-                ilMethod.Emit(OpCodes.Ldarg_0);
-                ilMethod.Emit(OpCodes.Ldfld, fieldInterceptor);
+                //instance imp
+                ilMethod.Emit(OpCodes.Newobj, impType.GetConstructor(new Type[0]));
+                ilMethod.Emit(OpCodes.Stloc, impObj);
 
-                // create instance of T
-                ilMethod.Emit(OpCodes.Newobj, typeof(TImp).GetConstructor(new Type[0]));
-                ilMethod.Emit(OpCodes.Ldstr, method.Name);
+                //if no attribute
+                if (fieldInterceptor != null || actionAttributeObj != null)
+                {
+                    ilMethod.Emit(OpCodes.Ldstr, method.Name);
+                    ilMethod.Emit(OpCodes.Stloc, methodName);
 
-                // build the method parameters
-                if (methodParameterTypes == null)
-                {
-                    ilMethod.Emit(OpCodes.Ldnull);
-                }
-                else
-                {
-                    var parameters = ilMethod.DeclareLocal(typeof(object[]));
                     ilMethod.Emit(OpCodes.Ldc_I4, methodParameterTypes.Length);
                     ilMethod.Emit(OpCodes.Newarr, typeof(object));
                     ilMethod.Emit(OpCodes.Stloc, parameters);
 
+                    // build the method parameters
                     for (var j = 0; j < methodParameterTypes.Length; j++)
                     {
                         ilMethod.Emit(OpCodes.Ldloc, parameters);
@@ -127,11 +130,63 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                         ilMethod.Emit(OpCodes.Box, methodParameterTypes[j]);
                         ilMethod.Emit(OpCodes.Stelem_Ref);
                     }
-                    ilMethod.Emit(OpCodes.Ldloc, parameters);
                 }
 
-                // call Invoke() method of Interceptor
-                ilMethod.Emit(OpCodes.Callvirt, interceptorType.GetMethod("Invoke"));
+                //dynamic proxy action before
+                if (actionAttributeType != null)
+                {
+                    //load arguments
+                    ilMethod.Emit(OpCodes.Ldloc, actionAttributeObj);
+                    ilMethod.Emit(OpCodes.Ldloc, methodName);
+                    ilMethod.Emit(OpCodes.Ldloc, parameters);
+                    ilMethod.Emit(OpCodes.Call, actionAttributeType.GetMethod("Before"));
+                }
+
+                if (interceptorAttributeType != null)
+                {
+                    //load arguments
+                    ilMethod.Emit(OpCodes.Ldarg_0);//this
+                    ilMethod.Emit(OpCodes.Ldfld, fieldInterceptor);
+                    ilMethod.Emit(OpCodes.Ldloc, impObj);
+                    ilMethod.Emit(OpCodes.Ldloc, methodName);
+                    ilMethod.Emit(OpCodes.Ldloc, parameters);
+                    // call Invoke() method of Interceptor
+                    ilMethod.Emit(OpCodes.Callvirt, interceptorAttributeType.GetMethod("Invoke"));
+                }
+                else
+                {
+                    //direct call method
+                    if (method.ReturnType == typeof(void) && actionAttributeType == null)
+                    {
+                        ilMethod.Emit(OpCodes.Ldnull);
+                    }
+
+                    ilMethod.Emit(OpCodes.Ldloc, impObj);
+                    for (var j = 0; j < methodParameterTypes.Length; j++)
+                    {
+                        ilMethod.Emit(OpCodes.Ldarg, j + 1);
+                    }
+                    ilMethod.Emit(OpCodes.Callvirt, impType.GetMethod(method.Name));
+                    //box
+                    if (actionAttributeType != null)
+                    {
+                        if (method.ReturnType != typeof(void))
+                            ilMethod.Emit(OpCodes.Box, method.ReturnType);
+                        else
+                            ilMethod.Emit(OpCodes.Ldnull);
+                    }
+                }
+
+                //dynamic proxy action after
+                if (actionAttributeType != null)
+                {
+                    ilMethod.Emit(OpCodes.Stloc, result);
+                    //load arguments
+                    ilMethod.Emit(OpCodes.Ldloc, actionAttributeObj);
+                    ilMethod.Emit(OpCodes.Ldloc, methodName);
+                    ilMethod.Emit(OpCodes.Ldloc, result);
+                    ilMethod.Emit(OpCodes.Call, actionAttributeType.GetMethod("After"));
+                }
 
                 // pop the stack if return void
                 if (method.ReturnType == typeof(void))
@@ -140,15 +195,15 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
                 }
                 else
                 {
-                    //unbox
-                    if (method.ReturnType.IsValueType)
-                        ilMethod.Emit(OpCodes.Unbox_Any, method.ReturnType);
-                    else
-                        ilMethod.Emit(OpCodes.Castclass, method.ReturnType);
-                    ilMethod.Emit(OpCodes.Ldloc_0);
-                    ilMethod.Emit(OpCodes.Stloc_0);
+                    //unbox,if direct invoke,no box
+                    if (fieldInterceptor != null || actionAttributeObj != null)
+                    {
+                        if (method.ReturnType.IsValueType)
+                            ilMethod.Emit(OpCodes.Unbox_Any, method.ReturnType);
+                        else
+                            ilMethod.Emit(OpCodes.Castclass, method.ReturnType);
+                    }
                 }
-
                 // complete
                 ilMethod.Emit(OpCodes.Ret);
             }
