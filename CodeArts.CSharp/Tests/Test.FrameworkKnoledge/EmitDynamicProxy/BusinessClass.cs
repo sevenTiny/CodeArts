@@ -29,6 +29,7 @@ namespace Test.FrameworkKnoledge.EmitDynamicProxy
     }
 
     [Interceptor]
+    [Action]
     public class BusinessClass : IBusinessClass
     {
         public static IBusinessClass Instance = DynamicProxy.CreateProxyOfRealize<IBusinessClass, BusinessClass>();
@@ -41,79 +42,79 @@ namespace Test.FrameworkKnoledge.EmitDynamicProxy
             //do nothing;
         }
 
-        [Action]
+        //[Action]
         public bool GetBool(bool bo)
         {
             return bo;
         }
 
-        [Action]
+        //[Action]
         public DateTime GetDateTime(DateTime time)
         {
             return time;
         }
 
-        [Action]
+        //[Action]
         public decimal GetDecimal(decimal dec)
         {
             return dec;
         }
 
-        [Action]
+        //[Action]
         public double GetDouble(double dou)
         {
             return dou;
         }
 
-        [Action]
+        //[Action]
         public float GetFloat(float fl)
         {
             return fl;
         }
 
-        [Action]
+        //[Action]
         public int GetInt(int age)
         {
             return age;
         }
 
-        [Action]
+        //[Action]
         public object GetObject(object obj)
         {
             return obj;
         }
 
-        [Action]
+        //[Action]
         public OperateResult GetOperateResult(int code, string message)
         {
             return new OperateResult { Code = code, Message = message };
         }
 
-        [Action]
+        //[Action]
         public List<OperateResult> GetOperateResults(List<OperateResult> operateResults)
         {
             return operateResults;
         }
 
-        [Action]
+        //[Action]
         public string GetString(string str)
         {
             return str;
         }
 
-        [Action]
+        //[Action]
         public void ThrowException()
         {
             //throw new ArgumentException("arguments can not be null");
         }
 
-        [Action]
+        //[Action]
         public int NoArgument()
         {
             return 1;
         }
 
-        [Action]
+        //[Action]
         public void ArgumentVoid(int a, string b)
         {
 
@@ -127,85 +128,85 @@ namespace Test.FrameworkKnoledge.EmitDynamicProxy
 
         public static IBusinessClass Instance2 = new BusinessClass();
 
-        [Action]
+        //[Action]
         public virtual void Test()
         {
             //do nothing;
         }
 
-        [Action]
+        //[Action]
         public virtual bool GetBool(bool bo)
         {
             return bo;
         }
 
-        [Action]
+        //[Action]
         public virtual DateTime GetDateTime(DateTime time)
         {
             return time;
         }
 
-        [Action]
+        //[Action]
         public virtual decimal GetDecimal(decimal dec)
         {
             return dec;
         }
 
-        [Action]
+        //[Action]
         public virtual double GetDouble(double dou)
         {
             return dou;
         }
 
-        [Action]
+        //[Action]
         public virtual float GetFloat(float fl)
         {
             return fl;
         }
 
-        [Action]
+        //[Action]
         public virtual int GetInt(int age)
         {
             return age;
         }
 
-        [Action]
+        //[Action]
         public virtual object GetObject(object obj)
         {
             return obj;
         }
 
-        [Action]
+        //[Action]
         public virtual OperateResult GetOperateResult(int code, string message)
         {
             return new OperateResult { Code = code, Message = message };
         }
 
-        [Action]
+        //[Action]
         public virtual List<OperateResult> GetOperateResults(List<OperateResult> operateResults)
         {
             return operateResults;
         }
 
-        [Action]
+        //[Action]
         public virtual string GetString(string str)
         {
             return str;
         }
 
-        [Action]
+        //[Action]
         public virtual void ThrowException()
         {
             //throw new ArgumentException("arguments can not be null");
         }
 
-        [Action]
+        //[Action]
         public virtual int NoArgument()
         {
             return 1;
         }
 
-        [Action]
+        //[Action]
         public virtual void ArgumentVoid(int a, string b)
         {
         }

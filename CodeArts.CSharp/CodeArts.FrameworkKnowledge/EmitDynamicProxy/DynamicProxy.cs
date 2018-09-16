@@ -73,8 +73,14 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
             var methodsOfType = impType.GetMethods(BindingFlags.Public | BindingFlags.Instance);
 
+            string[] ignoreMethodName = new[] { "GetType", "ToString", "GetHashCode", "Equals" };
+
             foreach (var method in methodsOfType)
             {
+                //ignore method
+                if (ignoreMethodName.Contains(method.Name))
+                    return;
+
                 var methodParameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
 
                 MethodAttributes methodAttributes;
@@ -97,9 +103,17 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
                 //attribute init
                 Type actionAttributeType = null;
-                if (method.GetCustomAttribute(typeof(ActionBaseAttribute)) != null)
+                if (method.GetCustomAttribute(typeof(ActionBaseAttribute)) != null || impType.GetCustomAttribute(typeof(ActionBaseAttribute)) != null)
                 {
-                    actionAttributeType = method.GetCustomAttribute(typeof(ActionBaseAttribute)).GetType();
+                    //method can override class attrubute
+                    if (method.GetCustomAttribute(typeof(ActionBaseAttribute)) != null)
+                    {
+                        actionAttributeType = method.GetCustomAttribute(typeof(ActionBaseAttribute)).GetType();
+                    }
+                    else if (impType.GetCustomAttribute(typeof(ActionBaseAttribute)) != null)
+                    {
+                        actionAttributeType = impType.GetCustomAttribute(typeof(ActionBaseAttribute)).GetType();
+                    }
 
                     actionAttributeObj = ilMethod.DeclareLocal(actionAttributeType);
                     ilMethod.Emit(OpCodes.Newobj, actionAttributeType.GetConstructor(new Type[0]));

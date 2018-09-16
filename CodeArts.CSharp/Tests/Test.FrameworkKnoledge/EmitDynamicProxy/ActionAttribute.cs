@@ -4,7 +4,6 @@ using System.Diagnostics;
 
 namespace Test.FrameworkKnoledge.EmitDynamicProxy
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class ActionAttribute : ActionBaseAttribute
     {
         public override void Before(string @method, object[] parameters)
