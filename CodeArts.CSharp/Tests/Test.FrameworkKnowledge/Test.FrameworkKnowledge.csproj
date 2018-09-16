@@ -8,8 +8,8 @@
     <ProjectGuid>{1A93B6AC-9949-4F69-917E-277E08F366B1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Test.FrameworkKnoledge</RootNamespace>
-    <AssemblyName>Test.FrameworkKnoledge</AssemblyName>
+    <RootNamespace>Test.FrameworkKnowledge</RootNamespace>
+    <AssemblyName>Test.FrameworkKnowledge</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

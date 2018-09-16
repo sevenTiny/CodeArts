@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.DataStructure", "Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeArts.FrameworkKnowledge", "CodeArts.FrameworkKnowledge\CodeArts.FrameworkKnowledge.csproj", "{35E7E9FC-48B9-41DF-B808-759E7AEBE16C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.FrameworkKnoledge", "Tests\Test.FrameworkKnoledge\Test.FrameworkKnoledge.csproj", "{1A93B6AC-9949-4F69-917E-277E08F366B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.FrameworkKnowledge", "Tests\Test.FrameworkKnowledge\Test.FrameworkKnowledge.csproj", "{1A93B6AC-9949-4F69-917E-277E08F366B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

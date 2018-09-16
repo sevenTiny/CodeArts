@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Test.FrameworkKnoledge.EmitDynamicProxy
+namespace Test.FrameworkKnowledge.EmitDynamicProxy
 {
     [TestClass]
     public class EmitDynamicProxyTest

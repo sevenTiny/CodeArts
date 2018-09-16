@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Test.FrameworkKnoledge.EmitDynamicProxy
+namespace Test.FrameworkKnowledge.EmitDynamicProxy
 {
     public class ActionAttribute : ActionBaseAttribute
     {

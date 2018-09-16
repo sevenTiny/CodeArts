@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Test.FrameworkKnoledge.EmitDynamicProxy
+namespace Test.FrameworkKnowledge.EmitDynamicProxy
 {
     public class OperateResult
     {
