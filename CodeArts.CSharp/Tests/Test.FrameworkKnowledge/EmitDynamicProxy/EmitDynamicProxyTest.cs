@@ -37,7 +37,7 @@ namespace Test.FrameworkKnowledge.EmitDynamicProxy
         public void FualtTolerantOfInherit()
         {
             //IBusinessClass Instance = new BusinessClassVirtualProxy();
-            IBusinessClass Instance = DynamicProxy.CreateProxyOfInherit<BusinessClassVirtual>();
+            IBusinessClass Instance = DynamicProxy.CreateProxyOfInherit<BusinessClassInherit>();
 
             Instance.Test();
             Instance.NoArgument();
@@ -105,7 +105,7 @@ namespace Test.FrameworkKnowledge.EmitDynamicProxy
 
             for (int i = 0; i < 1000000; i++)
             {
-                var instance = BusinessClassVirtual.Instance;
+                var instance = BusinessClassInherit.Instance;
                 instance.Test();
                 var result = instance.GetOperateResult(111, "333");
                 int intResult = instance.GetInt(222);

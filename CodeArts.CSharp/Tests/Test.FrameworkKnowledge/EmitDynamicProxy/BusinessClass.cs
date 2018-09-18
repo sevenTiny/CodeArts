@@ -122,13 +122,13 @@ namespace Test.FrameworkKnowledge.EmitDynamicProxy
     }
 
     [Interceptor]
-    public class BusinessClassVirtual : IBusinessClass
+    public class BusinessClassInherit : IBusinessClass
     {
-        public static IBusinessClass Instance = DynamicProxy.CreateProxyOfInherit<BusinessClassVirtual>();
+        public static IBusinessClass Instance = DynamicProxy.CreateProxyOfInherit<BusinessClassInherit>();
 
         public static IBusinessClass Instance2 = new BusinessClass();
 
-        //[Action]
+        [Action]
         public virtual void Test()
         {
             //do nothing;

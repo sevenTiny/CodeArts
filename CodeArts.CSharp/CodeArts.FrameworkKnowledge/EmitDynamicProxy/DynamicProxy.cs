@@ -7,6 +7,7 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 {
     public class DynamicProxy
     {
+        private static readonly bool IsOutPutDLL = false;
         public static TInterface CreateProxyOfRealize<TInterface, TImp>() where TImp : class, new() where TInterface : class
         {
             return Invoke<TInterface, TImp>();
@@ -27,11 +28,18 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
             var assemblyName = new AssemblyName(nameOfAssembly);
 
-            var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
-            var moduleBuilder = assembly.DefineDynamicModule(nameOfModule);
-
-            //var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
-            //var moduleBuilder = assembly.DefineDynamicModule(nameOfModule, nameOfAssembly + ".dll");
+            AssemblyBuilder assembly;
+            ModuleBuilder moduleBuilder;
+            if (IsOutPutDLL)
+            {
+                assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
+                moduleBuilder = assembly.DefineDynamicModule(nameOfModule, nameOfAssembly + ".dll");
+            }
+            else
+            {
+                assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+                moduleBuilder = assembly.DefineDynamicModule(nameOfModule);
+            }
 
             TypeBuilder typeBuilder;
             if (inheritMode)
@@ -43,7 +51,8 @@ namespace CodeArts.FrameworkKnowledge.EmitDynamicProxy
 
             var t = typeBuilder.CreateType();
 
-            //assembly.Save(nameOfAssembly + ".dll");
+            if (IsOutPutDLL)
+                assembly.Save(nameOfAssembly + ".dll");
 
             return Activator.CreateInstance(t) as TInterface;
         }
