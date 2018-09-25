@@ -45,6 +45,7 @@
     <Compile Include="EmitDynamicProxy\ActionBaseAttribute.cs" />
     <Compile Include="EmitDynamicProxy\InterceptorBaseAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThrowException\ThrowExceptionPerformance.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

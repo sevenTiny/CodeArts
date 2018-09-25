@@ -53,6 +53,7 @@
     <Compile Include="EmitDynamicProxy\ActionAttribute.cs" />
     <Compile Include="EmitDynamicProxy\EmitDynamicProxyTest.cs" />
     <Compile Include="EmitDynamicProxy\InterceptorAttribute.cs" />
+    <Compile Include="ExceptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
