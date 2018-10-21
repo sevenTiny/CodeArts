@@ -28,7 +28,7 @@ namespace Test.FrameworkKnowledge.EmitDynamicProxy
         void ThrowException();
     }
 
-    [Interceptor]
+    //[Interceptor]
     [Action]
     public class BusinessClass : IBusinessClass
     {
@@ -36,7 +36,7 @@ namespace Test.FrameworkKnowledge.EmitDynamicProxy
 
         public static IBusinessClass Instance2 = new BusinessClass();
 
-        [Action]
+        //[Action]
         public void Test()
         {
             //do nothing;
