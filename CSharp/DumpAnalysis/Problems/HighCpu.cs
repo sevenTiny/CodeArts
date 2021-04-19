@@ -11,9 +11,16 @@ namespace DumpAnalysis.Problems
     {
         public static void Execute()
         {
+            var list = Enumerable.Range(1, 10000).ToArray().AsParallel();
+
             while (true)
             {
-                Enumerable.Repeat(1, 1000).AsParallel().ForAll(t => Thread.SpinWait(100));
+                var sum = list.Sum();
+                var rev = list.Reverse().Sum();
+                var avg = list.Average();
+                var max = list.Max();
+                var min = list.Min();
+                var avg2 = list.Select(t => Math.PI * t).Average();
             }
         }
     }
