@@ -1,6 +1,7 @@
 using Demo.AspNetCoreWebApi.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,24 +46,21 @@ namespace Demo.AspNetCoreWebApi
             }
 
             #region 全局异常拦截中间件（方式一）
-            //app.Use((ctx, next) =>
-            //{
-            //    try
-            //    {
-            //        next().Wait();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        ctx.Response.ContentType = "application/json";
-            //        JsonSerializer.SerializeAsync(ctx.Response.Body, ex.Message).Wait();
-            //    }
-
-            //    return Task.CompletedTask;
-            //});
+            app.Use(async (ctx, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception ex)
+                {
+                    await ctx.Response.WriteAsync(ex.Message);
+                }
+            });
             #endregion
 
             #region 全局异常拦截中间件（方式二）
-            app.UseExceptionMiddleware();
+            //app.UseExceptionMiddleware();
             #endregion
 
             app.UseRouting();
