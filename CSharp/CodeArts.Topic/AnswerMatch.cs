@@ -39,17 +39,18 @@ namespace CodeArts.Topic
     public class AnswerMatch
     {
         [TestMethod]
-        //[DataRow("A,B,C", "A,B|A,C|B")]
-        //[DataRow("A,B,C,D", "A,B|A,C|B|D,E,F")]
-        //[DataRow("A,B,C,D,E", "A,B|A,C|B|D,E,F|E")]
-        //[DataRow("A,B,C,D,E", "A,B|A,C|C|D,E,F|E")]
-        //[DataRow("A,B,C,D,E", "A,B|A,C|C,D|E,F|E")]
-        //[DataRow("A,B,C,D,E,F", "A,B|A,C|C,D|E,F|E|F")]
-        //[DataRow("A,B,C,D,E,F,A", "A,B|A,C|C,D|E,F|E|F|A,C,E")]
+        [Description("全排列法")]
+        [DataRow("A,B,C", "A,B|A,C|B")]
+        [DataRow("A,B,C,D", "A,B|A,C|B|D,E,F")]
+        [DataRow("A,B,C,D,E", "A,B|A,C|B|D,E,F|E")]
+        [DataRow("A,B,C,D,E", "A,B|A,C|C|D,E,F|E")]
+        [DataRow("A,B,C,D,E", "A,B|A,C|C,D|E,F|E")]
+        [DataRow("A,B,C,D,E,F", "A,B|A,C|C,D|E,F|E|F")]
+        [DataRow("A,B,C,D,E,F,A", "A,B|A,C|C,D|E,F|E|F|A,C,E")]
         [DataRow("A,B,C,D,E,F,A,B", "A,B|A,C|C,D|E,F|E|F|A,C,E|D")]
         //[DataRow("A,B,C,D,E,F,A,B,C", "A,B|A,C|C,D|E,F|E|F|A,C,E|D|C")]
         //[DataRow("A,B,C,D,E,F,G,H,I,J", "A,B|A,C|C,D|E,F|E|F|G|H|I|O")]
-        public void Main(string input, string answer)
+        public void Method1(string input, string answer)
         {
             //输入答案数组
             string[] inputs = input.Split(',');
@@ -90,7 +91,7 @@ namespace CodeArts.Topic
             stopwatch.Stop();
 
             //输出结果
-            Trace.WriteLine($"{inputs.Length} Inputs\tElapsedMilliseconds={stopwatch.ElapsedMilliseconds}\tresult={string.Join(",", max.Levels.Select(t => inputs[t]))}");
+            Trace.WriteLine($"{inputs.Length} Inputs\tElapsedMilliseconds={stopwatch.ElapsedMilliseconds}\tresult={string.Join(",", max.Levels.Select(t => inputs[t]))}\tscore={max.Levels.Count}");
         }
 
         private void GetMax(int level, int[][] rec, bool[] hasExist, int lineSum, List<int> selected, Store max)
@@ -142,6 +143,74 @@ namespace CodeArts.Topic
 
                 lineExist[i] = origin;
             }
+        }
+
+        [TestMethod]
+        [Description("投票选举法(暂时这个方法不准，在8个的时候计算是错误的)")]
+        //[DataRow("A,B,C", "A,B|A,C|B", 3)]
+        //[DataRow("A,B,C,D", "A,B|A,C|B|D,E,F", 4)]
+        //[DataRow("A,B,C,D,E", "A,B|A,C|B|D,E,F|E", 0)]
+        //[DataRow("A,B,C,D,E", "A,B|A,C|C|D,E,F|E", 0)]
+        [DataRow("A,B,C,D,E", "A,B|A,C|C,D|E,F|E", 0)]
+        [DataRow("A,B,C,D,E,F", "A,B|A,C|C,D|E,F|E|F", 0)]
+        [DataRow("A,B,C,D,E,F,A", "A,B|A,C|C,D|E,F|E|F|A,C,E", 0)]
+        [DataRow("A,B,C,D,E,F,A,B", "A,B|A,C|C,D|E,F|E|F|A,C,E|D", 0)]
+        //[DataRow("A,B,C,D,E,F,A,B,C", "A,B|A,C|C,D|E,F|E|F|A,C,E|D|C")]
+        //[DataRow("A,B,C,D,E,F,G,H,I,J", "A,B|A,C|C,D|E,F|E|F|G|H|I|O")]
+        public void Method2(string input, string answer, int exPectedScore)
+        {
+            //输入答案数组
+            string[] inputs = input.Split(',');
+            //标准答案
+            string[][] answers = answer.Split('|').Select(t => t.Split(',')).ToArray();
+
+            Stopwatch stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            //1. 转成1/0方形矩阵
+            /*
+                A=[1,1,0,0]
+                B=[1,0,1,0]
+                C=[0,1,0,0]
+                D=[0,0,0,1]
+             */
+            var rec = inputs.Select(t => Enumerable.Range(0, inputs.Length).Select(i => i < answers.Length ? (answers[i].Contains(t) ? 1d : 0) : 0).ToArray()).ToArray();
+
+#if DEBUG
+            //Debug时候输出方形矩阵
+            for (int i = 0; i < inputs.Length; i++)
+                Trace.WriteLine($"{inputs[i]}=[{string.Join(",", rec[i])}]");
+#endif
+            //票数容器
+            var tickts = new double[rec.Length];
+
+            for (int i = 0; i < rec.Length; i++)
+            {
+                var currentLine = rec[i];
+                //每列的权重
+                var weight = (double)1 / currentLine.Count(t => t == 1);
+
+                for (int j = 0; j < rec.Length; j++)
+                {
+                    var currentPoint = currentLine[j];
+
+                    if (currentPoint == 0)
+                        continue;
+
+                    var add = tickts[j] + weight;
+
+                    tickts[j] = add > 1 ? 1 : add;
+                }
+            }
+
+            //整理票数
+            var result = Math.Round(tickts.Sum(), MidpointRounding.AwayFromZero);
+
+            stopwatch.Stop();
+
+            //输出结果
+            Trace.WriteLine($"{inputs.Length} Inputs\tElapsedMilliseconds={stopwatch.ElapsedMilliseconds}\ttickts={string.Join(",", tickts.Select(t => t.ToString("0.##")))}\tsum={tickts.Sum().ToString("0.##")}\tscore={result}");
         }
     }
 
