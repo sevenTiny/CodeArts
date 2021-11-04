@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DumpAnalysis", "DumpAnalysi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.NLua", "Demo.NLua\Demo.NLua.csproj", "{197BAC89-E2BD-4D43-91BF-F128EB22892E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.AspNetCoreWebApi", "Demo.AspNetCoreWebApi\Demo.AspNetCoreWebApi.csproj", "{FD4247AF-27F1-4BA3-9FF0-C7F1B7778DD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.AspNetCoreWebApi_v5.0", "Demo.AspNetCoreWebApi_v5.0\Demo.AspNetCoreWebApi_v5.0.csproj", "{FD4247AF-27F1-4BA3-9FF0-C7F1B7778DD6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeArts", "CodeArts", "{B03696ED-E054-4697-926C-07D9B8B29C73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Threading", "Demo.Threading\Demo.Threading.csproj", "{76C44984-8362-45DF-B6F8-044B70D45B02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Threading", "Demo.Threading\Demo.Threading.csproj", "{76C44984-8362-45DF-B6F8-044B70D45B02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

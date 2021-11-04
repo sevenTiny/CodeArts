@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Demo.AspNetCoreWebApi_v5.0</AssemblyName>
+    <RootNamespace>Demo.AspNetCoreWebApi</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
