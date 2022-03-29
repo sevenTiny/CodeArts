@@ -246,10 +246,10 @@ if __name__ == '__main__':
         os.mkdir('temp')
 
     # xlsxwriter 实现方式
-    # use_xlsxwriter()
+    use_xlsxwriter()
 
     # use_xlrd 实现方式
-    use_xlrd()
+    # use_xlrd()
 
     # use_xlwt 实现方式
     # use_xlwt()
