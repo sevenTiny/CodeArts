@@ -38,8 +38,8 @@ namespace CodeArts.Topic
     [TestClass]
     public class AnswerMatch
     {
+        #region 全排列算法
         [TestMethod]
-        [Description("全排列法")]
         [DataRow("A,B,C", "A,B|A,C|B")]
         [DataRow("A,B,C,D", "A,B|A,C|B|D,E,F")]
         [DataRow("A,B,C,D,E", "A,B|A,C|B|D,E,F|E")]
@@ -93,7 +93,6 @@ namespace CodeArts.Topic
             //输出结果
             Trace.WriteLine($"{inputs.Length} Inputs\tElapsedMilliseconds={stopwatch.ElapsedMilliseconds}\tresult={string.Join(",", max.Levels.Select(t => inputs[t]))}\tscore={max.Levels.Count}");
         }
-
         private void GetMax(int level, int[][] rec, bool[] hasExist, int lineSum, List<int> selected, Store max)
         {
             //当前层结果
@@ -144,9 +143,23 @@ namespace CodeArts.Topic
                 lineExist[i] = origin;
             }
         }
+        class Store
+        {
+            public int Sum { get; set; }
+            /// <summary>
+            /// 层级（也就是答案）
+            /// </summary>
+            public List<int> Levels { get; set; }
+            /// <summary>
+            /// 锚中的索引index
+            /// </summary>
+            public int[] Indexs { get; set; }
+            public int[] IndexsTmp { get; set; }
+        }
+        #endregion
 
+        #region 投票选举法(暂时这个方法不准，在8个的时候计算是错误的)
         [TestMethod]
-        [Description("投票选举法(暂时这个方法不准，在8个的时候计算是错误的)")]
         //[DataRow("A,B,C", "A,B|A,C|B", 3)]
         //[DataRow("A,B,C,D", "A,B|A,C|B|D,E,F", 4)]
         //[DataRow("A,B,C,D,E", "A,B|A,C|B|D,E,F|E", 0)]
@@ -212,19 +225,75 @@ namespace CodeArts.Topic
             //输出结果
             Trace.WriteLine($"{inputs.Length} Inputs\tElapsedMilliseconds={stopwatch.ElapsedMilliseconds}\ttickts={string.Join(",", tickts.Select(t => t.ToString("0.##")))}\tsum={tickts.Sum().ToString("0.##")}\tscore={result}");
         }
-    }
+        #endregion
 
-    internal class Store
-    {
-        public int Sum { get; set; }
-        /// <summary>
-        /// 层级（也就是答案）
-        /// </summary>
-        public List<int> Levels { get; set; }
-        /// <summary>
-        /// 锚中的索引index
-        /// </summary>
-        public int[] Indexs { get; set; }
-        public int[] IndexsTmp { get; set; }
+        #region 匈牙利算法：https://zhuanlan.zhihu.com/p/96229700
+        [TestMethod]
+        //[DataRow("A,B,C", "A,B|A,C|B", 3)]
+        //[DataRow("A,B,C,D", "A,B|A,C|B|D,E,F", 4)]
+        //[DataRow("A,B,C,D,E", "A,B|A,C|B|D,E,F|E", 0)]
+        //[DataRow("A,B,C,D,E", "A,B|A,C|C|D,E,F|E", 0)]
+        [DataRow("A,B,C,D,E", "A,B|A,C|C,D|E,F|E", 0)]
+        [DataRow("A,B,C,D,E,F", "A,B|A,C|C,D|E,F|E|F", 0)]
+        [DataRow("A,B,C,D,E,F,A", "A,B|A,C|C,D|E,F|E|F|A,C,E", 0)]
+        [DataRow("A,B,C,D,E,F,A,B", "A,B|A,C|C,D|E,F|E|F|A,C,E|D", 0)]
+        //[DataRow("A,B,C,D,E,F,A,B,C", "A,B|A,C|C,D|E,F|E|F|A,C,E|D|C")]
+        //[DataRow("A,B,C,D,E,F,G,H,I,J", "A,B|A,C|C,D|E,F|E|F|G|H|I|O")]
+        public void Method3(string input, string answer, int exPectedScore)
+        {
+            //输入答案数组
+            string[] inputs = input.Split(',');
+            //标准答案
+            string[][] answers = answer.Split('|').Select(t => t.Split(',')).ToArray();
+
+            Stopwatch stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            //1. 转成1/0方形矩阵
+            /*
+                A=[1,1,0,0]
+                B=[1,0,1,0]
+                C=[0,1,0,0]
+                D=[0,0,0,1]
+             */
+            var rec = inputs.Select(t => Enumerable.Range(0, inputs.Length).Select(i => i < answers.Length ? (answers[i].Contains(t) ? 1d : 0) : 0).ToArray()).ToArray();
+
+#if DEBUG
+            //Debug时候输出方形矩阵
+            for (int i = 0; i < inputs.Length; i++)
+                Trace.WriteLine($"{inputs[i]}=[{string.Join(",", rec[i])}]");
+#endif
+
+            int M = rec.Length;                     //M表示集合的元素数量
+            var Map = new int[rec.Length][];        //邻接矩阵存图
+            var p = new int[rec.Length];            //记录当前右侧元素所对应的左侧元素
+            var vis = new bool[rec.Length];         //记录右侧元素是否已被访问过
+
+            //开始算法
+            int cnt = 0;
+            for (int i = 1; i <= M; ++i)
+            {
+                vis.Initialize();
+                if (match(i))
+                    cnt++;
+            }
+
+            bool match(int i)
+            {
+                for (int j = 1; j <= M; ++j)
+                    if (Map[i][j]==1 && !vis[j]) //有边且未访问
+                    {
+                        vis[j] = true;                 //记录状态为访问过
+                        if (p[j] == 0 || match(p[j])) //如果暂无匹配，或者原来匹配的左侧元素可以找到新的匹配
+                        {
+                            p[j] = i;    //当前左侧元素成为当前右侧元素的新匹配
+                            return true; //返回匹配成功
+                        }
+                    }
+                return false; //循环结束，仍未找到匹配，返回匹配失败
+            }
+        }
+        #endregion
     }
 }
