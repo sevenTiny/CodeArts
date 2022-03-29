@@ -8,9 +8,11 @@ import xlwings
 
 # 本实现参考：https://zhuanlan.zhihu.com/p/259583430
 '''
+【推荐】
 xlsxwriter 组件实现
 仅支持xlsx格式
 仅支持【写】
+可以处理xlwt下URL链接长度过长（255）无法写入的问题
 安装 pip install xlsxwriter
 使用 import xlsxwriter
 '''
@@ -50,8 +52,9 @@ def use_xlsxwriter():
 
 '''
 xlrd 组件实现
-支持xls、xlsx格式
+支持xls、xlsx格式(xlrd1.2.0之后的版本不支持xlsx格式，支持xls格式)
 支持【读】
+【不支持新版本xlsx，新版本不推荐】
 安装 pip install xlrd
 使用 import xlrd
 '''
@@ -62,7 +65,7 @@ def use_xlrd():
     use_xlsxwriter()
 
     # 文件名以及路径，如果路径或者文件名有中文给前面加一个 r
-    workbook = xlrd.open_workbook('/temp/xlsxwriter.xlsx')
+    workbook = xlrd.open_workbook('./temp/xlsxwriter.xlsx')
 
     table = workbook.sheets()[0]  #通过索引顺序获取
     table = workbook.sheet_by_index(0)  #通过索引顺序获取
@@ -106,17 +109,19 @@ def use_xlrd():
     # 单元格
 
     # 返回单元格对象
-    table.cell(rowx, colx)
+    print(table.cell(rowx, colx))
     # 返回对应位置单元格中的数据类型
-    table.cell_type(rowx, colx)
+    print(table.cell_type(rowx, colx))
     # 返回对应位置单元格中的数据
-    table.cell_value(rowx, colx)
+    print(table.cell_value(rowx, colx))
 
 
 '''
+【推荐】
 xlwt 组件实现
 仅支持xls格式
 支持【写，修改】
+URL格式有255长度限制
 安装 pip install xlwt
 使用 import xlwt
 '''
@@ -175,12 +180,14 @@ def use_xlwt():
 
 
 '''
-xlwings 组件实现（使用时会打开excel，有点莫名奇妙，不太好用）
+【不推荐】
+xlwings 组件实现
 https://docs.xlwings.org/en/stable/index.html
 支持xls和xlsx格式
 支持【读、写、修改】
 可以和matplotlib以及pandas无缝连接，支持读写numpy、pandas数据类型，将matplotlib可视化图表导入到excel中
 可以调用Excel文件中VBA写好的程序，也可以让VBA调用用Python写的程序
+使用时会打开excel，有点莫名奇妙，不太好用【不推荐】
 安装 pip install xlwings
 使用 import xlwings
 '''
@@ -240,6 +247,9 @@ if __name__ == '__main__':
 
     # xlsxwriter 实现方式
     # use_xlsxwriter()
+
+    # use_xlrd 实现方式
+    use_xlrd()
 
     # use_xlwt 实现方式
     # use_xlwt()
