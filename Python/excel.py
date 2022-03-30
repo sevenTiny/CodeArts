@@ -5,22 +5,26 @@ import os
 import datetime
 import xlwt
 import xlwings
+import pandas as pd
+from pandas import DataFrame
 
 # 本实现参考：https://zhuanlan.zhihu.com/p/259583430
 '''
-【推荐】
+【xlsx推荐♥】
 xlsxwriter 组件实现
 仅支持xlsx格式
 仅支持【写】
 可以处理xlwt下URL链接长度过长（255）无法写入的问题
-安装 pip install xlsxwriter
-使用 import xlsxwriter
+安装
+    pip install xlsxwriter
+使用
+    import xlsxwriter
 '''
 
 
-def use_xlsxwriter():
+def use_xlsxwriter(path):
     # 创建新的workbook
-    workbook = xlsxwriter.Workbook('./temp/xlsxwriter.xlsx')
+    workbook = xlsxwriter.Workbook(path)
     # URL过长情况可以通过 xlsxwriter.Workbook(end_xls).max_url_length= 10000000来解决
 
     # 创建新的sheet表
@@ -51,21 +55,24 @@ def use_xlsxwriter():
 
 
 '''
+【xls推荐♥】
 xlrd 组件实现
 支持xls、xlsx格式(xlrd1.2.0之后的版本不支持xlsx格式，支持xls格式)
 支持【读】
-【不支持新版本xlsx，新版本不推荐】
-安装 pip install xlrd
-使用 import xlrd
+【新版本不支持xlsx】
+安装
+    pip install xlrd
+使用
+    import xlrd
 '''
 
 
-def use_xlrd():
+def use_xlrd(path):
     # 先生成一个备用excel
     use_xlwt()
 
     # 文件名以及路径，如果路径或者文件名有中文给前面加一个 r
-    workbook = xlrd.open_workbook('./temp/xlwt.xls')
+    workbook = xlrd.open_workbook(path)
 
     table = workbook.sheets()[0]  #通过索引顺序获取
     table = workbook.sheet_by_index(0)  #通过索引顺序获取
@@ -117,17 +124,19 @@ def use_xlrd():
 
 
 '''
-【推荐】
+【xls推荐♥】
 xlwt 组件实现
 仅支持xls格式
 支持【写，修改】
 URL格式有255长度限制
-安装 pip install xlwt
-使用 import xlwt
+安装
+    pip install xlwt
+使用
+    import xlwt
 '''
 
 
-def use_xlwt():
+def use_xlwt(path):
     # 创建新的workbook
     workbook = xlwt.Workbook(encoding='ascii')
     # 创建新的sheet表
@@ -176,7 +185,7 @@ def use_xlwt():
     worksheet.write(3, 1, "我有颜色", style)
 
     # 保存
-    workbook.save("./temp/xlwt.xls")
+    workbook.save(path)
 
 
 '''
@@ -188,17 +197,19 @@ https://docs.xlwings.org/en/stable/index.html
 可以和matplotlib以及pandas无缝连接，支持读写numpy、pandas数据类型，将matplotlib可视化图表导入到excel中
 可以调用Excel文件中VBA写好的程序，也可以让VBA调用用Python写的程序
 使用时会打开excel，有点莫名奇妙，不太好用【不推荐】
-安装 pip install xlwings
-使用 import xlwings
+安装
+    pip install xlwings
+使用
+    import xlwings
 '''
 
 
-def use_xlwings():
-    # app = xlwings.App(visible=False, add_book=False)
+def use_xlwings(path):
+    app = xlwings.App(visible=False, add_book=False)
     #新建工作簿 (如果不接下一条代码的话，Excel只会一闪而过，卖个萌就走了）
+    wb = app.books.add()
     # 练习的时候建议直接用下面这条
-    wb = xlwings.Book('./temp/xlwings.xlsx')
-    # wb = app.books.add()
+    # wb = xlwings.Book(path)
     # 创建sheet表
     worksheet = wb.sheets[0]
     # 写入第一行第一列
@@ -213,7 +224,7 @@ def use_xlwings():
     worksheet.range('C4:C7').value = [1, 2, 3, 4]
 
     # 保存
-    wb.save('./temp/xlwings.xlsx')
+    wb.save(path)
     # 关闭（可省略）
     wb.close()
     # 退出Excel
@@ -221,10 +232,10 @@ def use_xlwings():
 
     # 读
     app = xlwings.App(visible=True, add_book=False)
-    wb = app.books.open('./temp/xlwings.xlsx')
+    wb = app.books.open(path)
     # 练习的时候建议直接用下面这条
     # 这样的话就不会频繁打开新的Excel
-    # wb = xlwings.Book('./temp/xlwings.xlsx')
+    # wb = xlwings.Book(path)
     # 找到sheet
     worksheet = wb.sheets[0]
     # 读A1的值
@@ -240,22 +251,63 @@ def use_xlwings():
     app.quit()
 
 
+'''
+【推荐♥♥♥】
+pandas 组件实现
+https://www.pypandas.cn/
+安装 
+    pip install pandas
+    pip install openpyxl
+使用
+    import pandas as pd
+'''
+
+
+def use_pandas_read(path):
+    data = pd.read_excel(path, sheet_name='sheet1')
+    print(data)
+
+    # 增加行数据，在第5行新增
+    data.loc[4] = ['4', 'john', 'pandas']
+
+    # 增加列数据，给定默认值None
+    data['new_col'] = None
+
+    # 保存数据
+    DataFrame(data).to_excel(path,
+                             sheet_name='sheet1',
+                             index=False,
+                             header=True)
+
+
+def use_pandas_write(path):
+    data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    DataFrame(data).to_excel(path,
+                             sheet_name='sheet1',
+                             index=False,
+                             header=True)
+
 if __name__ == '__main__':
 
     if not os.path.exists('temp'):
         os.mkdir('temp')
 
     # xlsxwriter 实现方式
-    # use_xlsxwriter()
-
-    # use_xlrd 实现方式
-    # use_xlrd()
+    # use_xlsxwriter('./temp/xlsxwriter.xlsx')
 
     # use_xlwt 实现方式
-    # use_xlwt()
+    # use_xlwt('./temp/xlwt.xls')
+
+    # use_xlrd 实现方式
+    # use_xlrd('./temp/xlwt.xls')
 
     # use_xlwings 实现方式
-    # use_xlwings()
+    # use_xlwings('./temp/xlwings.xlsx')
+
+    # use_pandas 实现方式
+    # use_pandas_write('./temp/pandas.xlsx')
+    # use_pandas_read('./temp/pandas.xlsx')
 
     print('finished!')
     sys.stdout.flush()
