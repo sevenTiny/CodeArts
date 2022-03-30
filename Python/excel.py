@@ -62,10 +62,10 @@ xlrd 组件实现
 
 def use_xlrd():
     # 先生成一个备用excel
-    use_xlsxwriter()
+    use_xlwt()
 
     # 文件名以及路径，如果路径或者文件名有中文给前面加一个 r
-    workbook = xlrd.open_workbook('./temp/xlsxwriter.xlsx')
+    workbook = xlrd.open_workbook('./temp/xlwt.xls')
 
     table = workbook.sheets()[0]  #通过索引顺序获取
     table = workbook.sheet_by_index(0)  #通过索引顺序获取
@@ -131,7 +131,7 @@ def use_xlwt():
     # 创建新的workbook
     workbook = xlwt.Workbook(encoding='ascii')
     # 创建新的sheet表
-    worksheet = workbook.add_sheet("My Sheet")
+    worksheet = workbook.add_sheet("sheet1")
 
     # 简单写入
     worksheet.write(0, 0, '单元格1')
@@ -246,7 +246,7 @@ if __name__ == '__main__':
         os.mkdir('temp')
 
     # xlsxwriter 实现方式
-    use_xlsxwriter()
+    # use_xlsxwriter()
 
     # use_xlrd 实现方式
     # use_xlrd()
