@@ -114,6 +114,10 @@ def df_sort():
     print('\n---按Score，Age排序---')
     print(df.sort_values(by=['Score', 'Age']).head())
 
+# 透视表
+def df_pivot():
+    None
+    #https://zhuanlan.zhihu.com/p/31952948
 
 # 二维图
 # pip install matplotlib

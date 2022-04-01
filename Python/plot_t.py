@@ -8,7 +8,6 @@ matplotlib 绘图
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 # 折线图
 def df_plot():
     # 线1（参数1：横坐标值，参数2：对应横坐标的纵值）
@@ -104,7 +103,7 @@ if __name__ == '__main__':
     plt.xticks(np.arange(1, 14, 1))
 
     # 折线图
-    # df_plot()
+    df_plot()
     # 柱状图
     # df_plot_bar()
     # 散点图
