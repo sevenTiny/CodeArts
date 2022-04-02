@@ -1,7 +1,9 @@
 # https://pandas.pydata.org/docs/index.html
+from operator import index
 import os
 from traceback import print_tb
 from numpy import NaN, int32
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 '''
@@ -14,8 +16,9 @@ def get_df():
         "Name":
         ["苏洵", "苏轼", "苏辙", "张柬之", "王羲之", '白居易', '杜甫', '李白', '李清照', '张择端'],
         "Age": [69, 81, 70, 50, 60, 43, 75, 88, 91, 56],
-        "Sex": ['m', "m", "m", "m", "m", 'm', "m", 'm', "f", "m"],
+        "Sex": ['男', "男", "男", "男", "男", '男', "男", '男', "女", "男"],
         "BirthYear": [900, 921, 923, 681, 491, 660, 670, 650, 521, 1022],
+        "Dynasty": ['宋', '宋', '宋', '唐', '东晋', '唐', '唐', '唐', '宋', '宋'],
         "Score": [100, 100, 99, 55, 79, 89, 76, 45, 79, 49]
     })
     # 打印对齐
@@ -114,10 +117,18 @@ def df_sort():
     print('\n---按Score，Age排序---')
     print(df.sort_values(by=['Score', 'Age']).head())
 
+
 # 透视表
+# https://zhuanlan.zhihu.com/p/31952948
 def df_pivot():
-    None
-    #https://zhuanlan.zhihu.com/p/31952948
+    df = get_df()
+    print('\n---pivot_table index=Sex---')
+    print(df.pivot_table(df, index=[u'Sex']))
+    print('\n---pivot_table index=Sex,Dynasty,Name---')
+    print(df.pivot_table(df, index=[u'Sex', u'Dynasty', u'Name']))
+    print('\n---pivot_table index=Sex/agg=count\max---')
+    print(df.pivot_table(df, index=[u'Sex'], aggfunc=['count', np.max]))
+
 
 # 二维图
 # pip install matplotlib
@@ -210,5 +221,6 @@ if __name__ == '__main__':
     # df_replace()
     # df_plot()
     # df_edit()
-    df_sort()
+    # df_sort()
+    df_pivot()
     None

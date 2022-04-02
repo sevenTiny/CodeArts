@@ -103,12 +103,12 @@ if __name__ == '__main__':
     plt.xticks(np.arange(1, 14, 1))
 
     # 折线图
-    df_plot()
+    # df_plot()
     # 柱状图
     # df_plot_bar()
     # 散点图
     # df_plot_scatter()
     # 饼状图
-    # df_plot_pie()
+    df_plot_pie()
 
     plt.show()
