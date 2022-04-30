@@ -224,3 +224,6 @@ if __name__ == '__main__':
     # df_sort()
     df_pivot()
     None
+
+# 重置数据表格索引（可以将group结果转成新dataframe）
+# re.reset_index(inplace=True)
