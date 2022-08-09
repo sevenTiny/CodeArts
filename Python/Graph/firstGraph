@@ -1,0 +1,20 @@
+// first graphy
+digraph {
+	graph [bgcolor=gray labeljust=center margin=0.75]
+	a [label="开始" fillcolor=lightblue fontname="Microsoft YaHei" shape=box style="rounded,filled"]
+	b [label="请输入数据 n " fillcolor=lightblue fontname="Microsoft YaHei" shape=parallelogram style=filled]
+	a -> b [arrowhead=vee]
+	c [label="i=1,s=0" fillcolor=lightblue fontname="Microsoft YaHei" shape=rectangle style=filled]
+	b -> c [arrowhead=vee]
+	d [label="i<n" fillcolor=lightblue fontname="Microsoft YaHei" shape=diamond style=filled]
+	c -> d [arrowhead=vee]
+	e [label="s+=i" fillcolor=lightblue fontname="Microsoft YaHei" shape=rectangle style=filled]
+	d -> e [label=Yes arrowhead=vee]
+	f [label="i+=1" fillcolor=lightblue fontname="Microsoft YaHei" shape=rectangle style=filled]
+	e -> f [arrowhead=vee]
+	f -> d [arrowhead=vee]
+	g [label="打印 s 的值" fillcolor=lightblue fontname="Microsoft YaHei" shape=parallelogram style=filled]
+	d -> g [label=No arrowhead=vee]
+	h [label="结束" fillcolor=lightblue fontname="Microsoft YaHei" shape=parallelogram style="rounded,filled"]
+	g -> h [arrowhead=vee]
+}

@@ -1,3 +1,11 @@
+'''
+安装：
+    1.  先安装 graphviz 程序，并且将bin目录添加到环境变量：https://graphviz.org/download/
+        否则会报错：failed to execute WindowsPath('dot'), make sure the Graphviz executables are on your systems' PATH
+    2.  安装 graphviz 模块
+        pip install graphviz
+'''
+
 from graphviz import Digraph
 
 def test1():
@@ -56,7 +64,7 @@ def test1():
     gz.view()
 
 def test2():
-    dot=Digraph(comment='first graphy',filename='firstGraph',format='png',)
+    dot=Digraph(comment='first graphy',filename='Graph/firstGraph',format='png',)
     dot.graph_attr['bgcolor']='gray'
     dot.graph_attr['labeljust']='center'
     dot.graph_attr['margin']='0.75'
