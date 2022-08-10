@@ -104,6 +104,8 @@ def _datetime():
     print(datetime.datetime.strptime('2020-1-1 12:01', '%Y-%m-%d %H:%M'))
     # 日期格式化
     print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
+    # 日期转tuple
+    print(datetime.datetime.now().timetuple())
 
     # 时间间隔（前一天）
     print(datetime.datetime.now() - datetime.timedelta(1))
