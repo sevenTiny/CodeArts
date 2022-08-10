@@ -4,6 +4,7 @@ import datetime
 import time
 import calendar
 
+
 def _time():
     '''
         time模块，主要处理和时间元组(struct_time)的格式化和解析
@@ -36,7 +37,7 @@ def _time():
         %Z	当前时区的名称
         %%	%符合，因为被当做转义字符
     '''
-    
+
     # 格林威治天文时间元组
     # print(time.gmtime())
 
@@ -78,7 +79,7 @@ def _datetime():
         datetime.time：时间(12:00:00)
         datetime.datetime：时期(2025-01-01 12:00:00)
     '''
-   
+
     # 当天日期
     today = datetime.date.today()
     print(today)
@@ -148,9 +149,8 @@ def _calendar():
     # 是否是闰年
     print(calendar.isleap(2020))
 
+
 if __name__ == '__main__':
     _time()
     _datetime()
     # _calendar()
-
-

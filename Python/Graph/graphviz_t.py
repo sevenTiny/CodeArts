@@ -1,4 +1,7 @@
 '''
+说明:
+    官方网站:http://www.graphviz.org/docs/attrs
+    python api:https://graphviz.readthedocs.io/en/stable/api.html?highlight=format#graphviz.Digraph.format
 安装：
     1.  先安装 graphviz 程序，并且将bin目录添加到环境变量：https://graphviz.org/download/
         否则会报错：failed to execute WindowsPath('dot'), make sure the Graphviz executables are on your systems' PATH
