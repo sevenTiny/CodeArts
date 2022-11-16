@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleAppNet60.System_Threading;
 
 namespace ConsoleAppNet60
 {
@@ -10,13 +11,7 @@ namespace ConsoleAppNet60
     {
         static void Main(string[] args)
         {
-            //InterlockedTest.PerformanceAnalysis();
-
-            //采用monitor执行自增
-            //InterlockedTest.PerformanceAnalysis_Monitor();
-
-            //采用cas执行自增
-            InterlockedTest.PerformanceAnalysis_Increament();
+            MonitorTest.Run();
         }
     }
 }

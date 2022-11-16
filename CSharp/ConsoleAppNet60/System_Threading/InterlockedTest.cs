@@ -5,14 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppNet60
+namespace ConsoleAppNet60.System_Threading
 {
     internal class InterlockedTest
     {
         /// <summary>
-        /// thread safe increament
+        /// end point
         /// </summary>
-        public static void Increament()
+        public static void Run()
+        {
+            PerformanceAnalysis_Increament();
+        }
+
+        /// <summary>
+        /// thread safe increament
+        // </summary>
+        static void Increament()
         {
             var j = 0;
 
@@ -34,7 +42,7 @@ namespace ConsoleAppNet60
             //result=100000
         }
 
-        public static void IncreamentPerformance()
+        static void IncreamentPerformance()
         {
             //lock method
 
@@ -90,13 +98,7 @@ namespace ConsoleAppNet60
             Console.WriteLine($"Interlocked.Increment，result={j2},elapsed={stopwatch.ElapsedMilliseconds}");
         }
 
-        public static void PerformanceAnalysis()
-        {
-            PerformanceAnalysis_Monitor();
-            PerformanceAnalysis_Increament();
-        }
-
-        public static void PerformanceAnalysis_Monitor()
+        static void PerformanceAnalysis_Monitor()
         {
             //lock method
 
@@ -130,7 +132,7 @@ namespace ConsoleAppNet60
             Console.WriteLine($"Monitor lock，result={j},elapsed={stopwatch.ElapsedMilliseconds}");
         }
 
-        public static void PerformanceAnalysis_Increament()
+        static void PerformanceAnalysis_Increament()
         {
             var stopwatch = new Stopwatch();
 
