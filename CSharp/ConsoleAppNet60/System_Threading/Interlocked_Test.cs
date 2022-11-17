@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppNet60.System_Threading
 {
-    internal class InterlockedTest
+    internal class Interlocked_Test
     {
         /// <summary>
         /// end point

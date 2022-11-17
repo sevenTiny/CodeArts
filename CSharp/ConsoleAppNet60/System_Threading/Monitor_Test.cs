@@ -9,14 +9,14 @@ namespace ConsoleAppNet60.System_Threading
     /// <summary>
     /// https://learn.microsoft.com/zh-cn/dotnet/api/system.threading.monitor.enter?view=net-6.0
     /// </summary>
-    internal class MonitorTest
+    internal class Monitor_Test
     {
         /// <summary>
         /// entry point
         /// </summary>
         public static void Run()
         {
-            SampleMonitor();
+            Monitor_Wait_Timeout();
         }
 
         private static object locker = new object();

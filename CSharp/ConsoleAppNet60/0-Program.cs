@@ -11,7 +11,7 @@ namespace ConsoleAppNet60
     {
         static void Main(string[] args)
         {
-            MonitorTest.Run();
+            IDisposable_Test.Run();
         }
     }
 }
