@@ -11,7 +11,7 @@ namespace ConsoleAppNet60
     {
         static void Main(string[] args)
         {
-            IDisposable_Test.Run();
+            Lock_Test.Run();
         }
     }
 }

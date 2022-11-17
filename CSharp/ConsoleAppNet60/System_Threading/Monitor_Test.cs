@@ -24,7 +24,7 @@ namespace ConsoleAppNet60.System_Threading
         private static int waitCount = 0;
 
         /// <summary>
-        /// monitor 'Monitor' locked status by 'isLocked' field
+        /// monitor 'Monitor' locked status
         /// </summary>
         /// <param name="threads"></param>
         static void LockStatusMonitor(params Thread[] threads)
