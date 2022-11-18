@@ -5,11 +5,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DumpAnalysis.Problems
+namespace Demo.CSharp.DumpAnalysis
 {
     public class HighCpu
     {
-        public static void Execute()
+        public static void Run()
+        {
+            Execute();
+
+            while (true)
+            {
+                Console.WriteLine("waiting...");
+                Thread.Sleep(1000);
+            }
+        }
+
+        static void Execute()
         {
             var list = Enumerable.Range(1, 10000).ToArray().AsParallel();
 

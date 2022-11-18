@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppNet60.System_Threading
+namespace Demo.CSharp.System_Threading
 {
     /// <summary>
     /// https://learn.microsoft.com/zh-cn/dotnet/api/system.threading.monitor.enter?view=net-6.0

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppNet60.System_Threading
+namespace Demo.CSharp.System_Threading
 {
     internal class Lock_Test
     {
@@ -113,7 +113,7 @@ namespace ConsoleAppNet60.System_Threading
   IL_0002:  stloc.0
   IL_0003:  br.s       IL_0081
   IL_0005:  nop
-  IL_0006:  ldsfld     object ConsoleAppNet60.System_Threading.Lock_Test::locker
+  IL_0006:  ldsfld     object Demo.CSharp.System_Threading.Lock_Test::locker
   IL_000b:  stloc.1
   IL_000c:  ldc.i4.0
   IL_000d:  stloc.2

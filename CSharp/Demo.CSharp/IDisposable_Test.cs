@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppNet60
+namespace Demo.CSharp
 {
     /// <summary>
     /// IDisposible接口哲学

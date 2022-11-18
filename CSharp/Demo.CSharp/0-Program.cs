@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConsoleAppNet60.System_Threading;
+using Demo.CSharp.System_Threading;
 
-namespace ConsoleAppNet60
+namespace Demo.CSharp
 {
     internal class Program
     {
