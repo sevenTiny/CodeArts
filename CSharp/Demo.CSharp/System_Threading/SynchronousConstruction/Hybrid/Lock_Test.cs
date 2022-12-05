@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.CSharp.System_Threading
+namespace Demo.CSharp.System_Threading.SynchronousConstruction.Hybrid
 {
     internal class Lock_Test
     {

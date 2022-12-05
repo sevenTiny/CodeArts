@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.CSharp.System_Threading
+namespace Demo.CSharp.System_Threading.SynchronousConstruction.Hybrid
 {
     /// <summary>
     /// https://learn.microsoft.com/zh-cn/dotnet/api/system.threading.monitor.enter?view=net-6.0
@@ -16,30 +16,12 @@ namespace Demo.CSharp.System_Threading
         /// </summary>
         public static void Run()
         {
-            Monitor_Wait_Timeout();
+            SampleMonitor();
         }
 
         private static object locker = new object();
 
         private static int waitCount = 0;
-
-        /// <summary>
-        /// monitor 'Monitor' locked status
-        /// </summary>
-        /// <param name="threads"></param>
-        static void LockStatusMonitor(params Thread[] threads)
-        {
-            //monitor lock status
-            new Thread(() =>
-            {
-                while (threads.Any(t => t.ThreadState != ThreadState.Stopped))
-                {
-                    //1s per .
-                    Console.Write(".");
-                    Thread.Sleep(1000);
-                }
-            }).Start();
-        }
 
         /// <summary>
         /// write thread message info second
@@ -52,7 +34,7 @@ namespace Demo.CSharp.System_Threading
             t1.Start();
             t2.Start();
 
-            LockStatusMonitor(t1, t2);
+            SynchronizationTestHelper.ThreadStatusMonitorLog(t1, t2);
 
             void DoTask()
             {
@@ -76,7 +58,7 @@ namespace Demo.CSharp.System_Threading
             t1.Start();
             t2.Start();
 
-            LockStatusMonitor(t1, t2);
+            SynchronizationTestHelper.ThreadStatusMonitorLog(t1, t2);
 
             void DoTask()
             {
@@ -104,7 +86,7 @@ namespace Demo.CSharp.System_Threading
             t1.Start();
             t2.Start();
 
-            LockStatusMonitor(t1, t2);
+            SynchronizationTestHelper.ThreadStatusMonitorLog(t1, t2);
 
             void DoTask()
             {
@@ -131,7 +113,7 @@ namespace Demo.CSharp.System_Threading
                     /*
                      * Pulse
                      * 通知等待队列中的线程锁定对象状态的更改。(等待队列 -> 就绪队列）
-                     * 调用Pulse并不会释放锁，因此要调用Exit释放锁才会让上述阻塞队列进入就绪队列，并重新获得锁得以继续执行
+                     * 调用Pulse并不会释放锁，因此要调用Exit释放锁才会重新获得锁得以继续执行
                      **/
                     Monitor.Pulse(locker);
                     Monitor.Exit(locker);
@@ -150,7 +132,7 @@ namespace Demo.CSharp.System_Threading
             t1.Start();
             t2.Start();
 
-            LockStatusMonitor(t1, t2);
+            SynchronizationTestHelper.ThreadStatusMonitorLog(t1, t2);
 
             void DoTask()
             {
@@ -200,7 +182,7 @@ namespace Demo.CSharp.System_Threading
             t1.Start();
             t2.Start();
 
-            LockStatusMonitor(t1, t2);
+            SynchronizationTestHelper.ThreadStatusMonitorLog(t1, t2);
 
             void DoTask()
             {

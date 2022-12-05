@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.CSharp.System_Threading
+namespace Demo.CSharp.System_Threading.SynchronousConstruction.Primitive.UserMode
 {
     internal class Interlocked_Test
     {

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Demo.CSharp.System_Threading;
+using Demo.CSharp.System_Threading.SynchronousConstruction.Hybrid;
+using Demo.CSharp.System_Threading.SynchronousConstruction.Primitive.KernelMode;
 
 namespace Demo.CSharp
 {
@@ -11,7 +12,7 @@ namespace Demo.CSharp
     {
         static void Main(string[] args)
         {
-            Lock_Test.Run();
+            EventWaitHandle_Text.Run();
         }
     }
 }
