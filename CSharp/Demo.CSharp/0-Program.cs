@@ -12,7 +12,7 @@ namespace Demo.CSharp
     {
         static void Main(string[] args)
         {
-            EventWaitHandle_Text.Run();
+            EventWaitHandle_Test.Run();
         }
     }
 }

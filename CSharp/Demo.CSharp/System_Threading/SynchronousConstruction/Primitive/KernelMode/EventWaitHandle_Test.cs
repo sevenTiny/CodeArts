@@ -12,7 +12,7 @@ namespace Demo.CSharp.System_Threading.SynchronousConstruction.Primitive.KernelM
     /// ManualReset 完全依赖信号判断决定是否可以继续执行，因此会将一批等待的线程释放
     /// AutoReset 在标记信号为 signaled 后释放一个线程执行后会自动重置成 nonsignaled，因此可以用来限制单线程执行
     /// </summary>
-    internal class EventWaitHandle_Text
+    internal class EventWaitHandle_Test
     {
         /// <summary>
         /// entry point
