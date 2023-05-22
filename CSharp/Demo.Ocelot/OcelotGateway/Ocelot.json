@@ -1,0 +1,38 @@
+{
+  "ReRoutes": [
+    {
+      // - 上游服务配置
+      "UpstreamPathTemplate": "/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+
+      // - 下游服务配置
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 39991
+        },
+        {
+          "Host": "localhost",
+          "Port": 39992
+        },
+        {
+          "Host": "localhost",
+          "Port": 39993
+        }
+      ],
+
+      // - LoadBalancer将决定负载均衡的算法，三种取值
+      // RoundRobin：轮流发送
+      // LeastConnection：将请求发往最空闲的那个服务器
+      // NoLoadBalance：总是发往第一个请求或者是服务发现
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://api.mybusiness.com"
+  }
+}

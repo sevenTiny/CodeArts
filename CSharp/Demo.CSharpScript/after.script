@@ -1,0 +1,33 @@
+//在方法内直接写相关业务逻辑
+public static List<DemoModel> After(List<DemoModel> models)
+{
+	//这里写业务逻辑
+        return models.Where(t=>t.Name.Contains("3")).ToList();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

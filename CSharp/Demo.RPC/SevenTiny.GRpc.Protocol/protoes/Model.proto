@@ -1,0 +1,11 @@
+﻿syntax = "proto3";
+
+package SevenTiny.GRpc.Protocol.Model;
+
+message RequestArgs {
+  string arg1 =1;
+}
+
+message OperateResult {
+  string result=1;
+}

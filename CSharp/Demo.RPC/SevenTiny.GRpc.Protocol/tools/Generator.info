@@ -1,0 +1,3 @@
+﻿调用生成工具生成工具执行如下命令:
+
+./protoc.exe -I ./protoes/ --csharp_out . --grpc_out . --plugin=protoc-gen-grpc=./tools/grpc_csharp_plugin.exe ./protoes/Business.proto

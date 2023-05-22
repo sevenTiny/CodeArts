@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.LinqImplementation", "Demo.LinqImplementation\Demo.LinqImplementation.csproj", "{382AFDBC-2F81-495F-ADD7-C417E56739A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Demo.LinqImplementation", "Test.Demo.LinqImplementation\Test.Demo.LinqImplementation.csproj", "{DDA0B9D4-1703-495B-88A8-4FB561A3E536}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LambdaExpressionTree", "LambdaExpressionTree\LambdaExpressionTree.csproj", "{50EBA1C0-1D15-4C60-BE43-4AAD0120C540}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LinqImplementation", "LinqImplementation", "{71FC29C1-0A1B-4691-83B5-AFEF04DDBE16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{382AFDBC-2F81-495F-ADD7-C417E56739A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{382AFDBC-2F81-495F-ADD7-C417E56739A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{382AFDBC-2F81-495F-ADD7-C417E56739A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{382AFDBC-2F81-495F-ADD7-C417E56739A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDA0B9D4-1703-495B-88A8-4FB561A3E536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDA0B9D4-1703-495B-88A8-4FB561A3E536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDA0B9D4-1703-495B-88A8-4FB561A3E536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDA0B9D4-1703-495B-88A8-4FB561A3E536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50EBA1C0-1D15-4C60-BE43-4AAD0120C540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50EBA1C0-1D15-4C60-BE43-4AAD0120C540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50EBA1C0-1D15-4C60-BE43-4AAD0120C540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50EBA1C0-1D15-4C60-BE43-4AAD0120C540}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{382AFDBC-2F81-495F-ADD7-C417E56739A0} = {71FC29C1-0A1B-4691-83B5-AFEF04DDBE16}
+		{DDA0B9D4-1703-495B-88A8-4FB561A3E536} = {71FC29C1-0A1B-4691-83B5-AFEF04DDBE16}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AAA21DE2-2261-4085-989C-617631E954AA}
+	EndGlobalSection
+EndGlobal

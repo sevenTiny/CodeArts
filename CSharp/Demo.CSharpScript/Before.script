@@ -1,0 +1,34 @@
+//在方法内直接写相关业务逻辑
+public static string Before(string name)
+{
+	//这里写业务逻辑
+	//return name;
+        return "1";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

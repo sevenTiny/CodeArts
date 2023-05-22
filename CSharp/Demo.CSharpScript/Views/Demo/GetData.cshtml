@@ -1,0 +1,49 @@
+﻿@using Demo.CSharpScript.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "GetData";
+    List<DemoModel> demoModels = ViewData["AfterData"] as List<DemoModel>;
+    var result = ViewData["ErrorData"] as string;
+}
+
+<form class="form" action="/Demo/ConfigSave" method="post" style="margin:20px;">
+    <div class="form-group">
+        <label>Before脚本<span style="font-weight:500;color:red">（拦截查询数据前的条件，可校验或编辑条件）</span></label>
+        <textarea class="form-control" name="before" style="height:200px;">@ViewData["Before"]</textarea>
+    </div>
+    <div class="form-group">
+        <label>After脚本<span style="font-weight:500;color:red">（拦截查询得到的结果数据，可编辑后返回到View）</span></label>
+        <textarea class="form-control" name="after" style="height:200px;">@ViewData["After"]</textarea>
+    </div>
+    <button class="btn btn-success">保存脚本</button>
+</form>
+
+<div class="row" style="margin:20px;">
+    <span>@result</span>
+</div>
+
+@if(demoModels != null)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Age</th>
+            <th>Name</th>
+            <th>Desc</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in demoModels)
+        {
+        <tr>
+            <td>@item.ID</td>
+            <td>@item.Age</td>
+            <td>@item.Name</td>
+            <td>@item.Desc</td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+
