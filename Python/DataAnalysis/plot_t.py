@@ -9,6 +9,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 折线图
+
+
 def df_plot():
     # 线1（参数1：横坐标值，参数2：对应横坐标的纵值）
     plt.plot(np.arange(1, 14, 1), [1, 2, 3, 4, 5, 6, 2, 3, 4, 6, 7, 5, 7])
@@ -35,8 +37,8 @@ def df_plot_pie():
         x=[3, 4, 5, 7, 3],
         labels=['a', 'b', 'c', 'd', 'e'],
         radius=0.8,
-        explode=[0, 0, 0, 0, 0],  #explodes 为0 代表不偏离圆心， 不为零则代表偏离圆心的距离
-        autopct='%1.1f%%',  #显示所占比例，百分数
+        explode=[0, 0, 0, 0, 0],  # explodes 为0 代表不偏离圆心， 不为零则代表偏离圆心的距离
+        autopct='%1.1f%%',  # 显示所占比例，百分数
         pctdistance=0.5,
         labeldistance=1.1,  # a,b,c,d 到圆心的距离
         textprops={
@@ -91,7 +93,7 @@ def df_plot_pie():
 
 
 if __name__ == '__main__':
-    #解决中文显示问题
+    # 解决中文显示问题
     plt.rcParams['font.sans-serif'] = ['KaiTi']  # 指定默认字体
     plt.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
 
