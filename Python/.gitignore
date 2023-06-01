@@ -1,6 +1,7 @@
 # self
 temp/
 output/
+SIMKAI.TTF
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
