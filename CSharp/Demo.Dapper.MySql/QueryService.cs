@@ -3,6 +3,7 @@ using DapperMySql.Entity;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Text;
 
 namespace DapperMySql
@@ -12,7 +13,7 @@ namespace DapperMySql
         private const string ConnectionString = "连接字符串";
         public List<OperateTest> GetList()
         {
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            using (DbConnection connection = new MySqlConnection(ConnectionString))
             {
                 return connection.Query<OperateTest>("select * from OperateTest").AsList();
             }
