@@ -1,1 +1,1 @@
-.Net Configuration: https://learn.microsoft.com/zh-cn/dotnet/core/extensions/configuration
+﻿.Net Configuration: https://learn.microsoft.com/zh-cn/dotnet/core/extensions/configuration

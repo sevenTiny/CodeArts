@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+ï»¿using Microsoft.Extensions.Configuration;
 
 namespace Demo.NetCoreConfiguration
 {
@@ -18,7 +18,7 @@ namespace Demo.NetCoreConfiguration
         [TestMethod]
         public void OptionsMode()
         {
-            //Get ºÍÏÂÃæÊ¾ÀıÖĞµÄ Bind ÊÇµÈ¼ÛµÄAPI
+            //Get å’Œä¸‹é¢ç¤ºä¾‹ä¸­çš„ Bind æ˜¯ç­‰ä»·çš„API
             Assert.AreEqual("Production", config.GetRequiredSection("Environment").Get<string>());
 
             // Get values from the config given their key and their target type.
@@ -60,10 +60,10 @@ namespace Demo.NetCoreConfiguration
             Assert.AreEqual(true, config.GetValue<bool>("Settings:KeyTwo"));
             Assert.AreEqual("Oh, that's nice...", config.GetValue<string>("Settings:KeyThree:Message"));
 
-            //Ë÷Òı»ñÈ¡Êı×é
+            //ç´¢å¼•è·å–æ•°ç»„
             Assert.AreEqual("46.36.198.121", config.GetValue<string>("Settings:IPAddressRange:0"));
 
-            //×¢£º¸ÃAPI²»Ö§³Ö¸´ÔÓÀàĞÍ£¬ÀıÈç: 
+            //æ³¨ï¼šè¯¥APIä¸æ”¯æŒå¤æ‚ç±»å‹ï¼Œä¾‹å¦‚: 
             //config.GetValue<string[]>("Settings:IPAddressRange");
             //config.GetValue<NestedSettings>("Settings:KeyThree")?.Message;
         }
@@ -82,7 +82,7 @@ namespace Demo.NetCoreConfiguration
         public void SectionGetTest()
         {
             Assert.AreEqual("Production", config.GetSection("Environment").Get<string>());
-            //Áé»îµÄ·½Ê½
+            //çµæ´»çš„æ–¹å¼
             Assert.AreEqual(1, config.GetSection("Settings").GetSection("KeyOne").Get<int>());
             Assert.AreEqual(1, config.GetSection("Settings").GetValue<int>("KeyOne"));
             Assert.AreEqual("1", config.GetSection("Settings")["KeyOne"]);
@@ -104,7 +104,7 @@ namespace Demo.NetCoreConfiguration
             File.WriteAllText(path, content.Replace("TempData111", "TempData222"));
 
             var tempData2 = cfg.GetValue<string>("TempData");
-            //ÕâÀï»»³ÉÇ¿ÀàĞÍÊÔÏÂ
+            //è¿™é‡Œæ¢æˆå¼ºç±»å‹è¯•ä¸‹
         }
     }
 
