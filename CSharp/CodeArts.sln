@@ -69,11 +69,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevenTiny.Thrift.Server", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.FluentHttp", "Demo.FluentHttp\Demo.FluentHttp.csproj", "{14745359-266A-4DA9-8C24-916D152709E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.FluentValidation", "Demo.FluentValidation\Demo.FluentValidation.csproj", "{354B2B72-753D-474C-8B2E-114531CEE970}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.FluentValidation", "Demo.FluentValidation\Demo.FluentValidation.csproj", "{354B2B72-753D-474C-8B2E-114531CEE970}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.EfCore.PostgreSql", "Demo.EfCore.PostgreSql\Demo.EfCore.PostgreSql.csproj", "{3E7D4D7C-E1A1-4A1D-A260-66CB8B49BB3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.EfCore.PostgreSql", "Demo.EfCore.PostgreSql\Demo.EfCore.PostgreSql.csproj", "{3E7D4D7C-E1A1-4A1D-A260-66CB8B49BB3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Dapper.MySql", "Demo.Dapper.MySql\Demo.Dapper.MySql.csproj", "{DA3E7F4E-ABA6-4BA9-947D-EE22F80CB560}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Dapper.MySql", "Demo.Dapper.MySql\Demo.Dapper.MySql.csproj", "{DA3E7F4E-ABA6-4BA9-947D-EE22F80CB560}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.NetCoreConfiguration", "Demo.NetCoreConfiguration\Demo.NetCoreConfiguration.csproj", "{0123BB02-3297-437A-B6E3-EB7844DD8F60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -201,6 +203,10 @@ Global
 		{DA3E7F4E-ABA6-4BA9-947D-EE22F80CB560}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA3E7F4E-ABA6-4BA9-947D-EE22F80CB560}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA3E7F4E-ABA6-4BA9-947D-EE22F80CB560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0123BB02-3297-437A-B6E3-EB7844DD8F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0123BB02-3297-437A-B6E3-EB7844DD8F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0123BB02-3297-437A-B6E3-EB7844DD8F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0123BB02-3297-437A-B6E3-EB7844DD8F60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
