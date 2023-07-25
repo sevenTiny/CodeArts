@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Demo.NetCoreConfiguration
 {
@@ -11,7 +12,7 @@ namespace Demo.NetCoreConfiguration
         {
             // Build a config object, using env vars and JSON providers.
             config = new ConfigurationBuilder()
-                .AddJsonFile(@"files\appsettings.json")
+                .AddJsonFile(@"appsettings.json")
                 .Build();
         }
 
@@ -92,10 +93,10 @@ namespace Demo.NetCoreConfiguration
         public void Reload()
         {
             var cfg = new ConfigurationBuilder()
-                .AddJsonFile(@"files\appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile(@"appsettings.json", optional: true, reloadOnChange: true)
                 .Build();
 
-            var path = Path.Combine(Environment.CurrentDirectory, "files", "appsettings.json");
+            var path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
 
             var content = File.ReadAllText(path);
 

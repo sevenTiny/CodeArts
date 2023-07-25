@@ -10,19 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="files\appsettings.ini" />
-    <None Remove="files\appsettings.json" />
-    <None Remove="files\appsettings.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="files\appsettings.ini">
+    <Content Include="appsettings.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\appsettings.json">
+    <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\appsettings.xml">
+    <Content Include="appsettings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

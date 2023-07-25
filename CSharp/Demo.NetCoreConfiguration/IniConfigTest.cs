@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Demo.NetCoreConfiguration
 {
@@ -11,7 +12,7 @@ namespace Demo.NetCoreConfiguration
         {
             // Build a config object, using env vars and JSON providers.
             config = new ConfigurationBuilder()
-                .AddIniFile(@"files\appsettings.ini")
+                .AddIniFile(@"appsettings.ini")
                 .Build();
         }
 
