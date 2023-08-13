@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Demo.NetCoreConfiguration
 {
@@ -11,7 +12,7 @@ namespace Demo.NetCoreConfiguration
         {
             // Build a config object, using env vars and JSON providers.
             config = new ConfigurationBuilder()
-                .AddJsonFile(@"files\appsettings.json")
+                .AddJsonFile(@"appsettings.json")
                 .Build();
         }
 
@@ -92,10 +93,10 @@ namespace Demo.NetCoreConfiguration
         public void Reload()
         {
             var cfg = new ConfigurationBuilder()
-                .AddJsonFile(@"files\appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile(@"appsettings.json", optional: true, reloadOnChange: true)
                 .Build();
 
-            var path = Path.Combine(Environment.CurrentDirectory, "files", "appsettings.json");
+            var path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
 
             var content = File.ReadAllText(path);
 
@@ -103,28 +104,44 @@ namespace Demo.NetCoreConfiguration
 
             File.WriteAllText(path, content.Replace("TempData111", "TempData222"));
 
+            Thread.Sleep(1000);
+
+            //如果是绑定强类型方式，也需要每次call API去获取
             var tempData2 = cfg.GetValue<string>("TempData");
-            //这里换成强类型试下
+
+            Assert.AreNotEqual(tempData, tempData2);
+
+#if DEBUG
+            //等待直到变更
+            //while (tempData == tempData2)
+            //{
+            //    Trace.WriteLine($"current is {tempData2} change waiting...");
+            //    Thread.Sleep(1000);
+            //    tempData2 = cfg.GetValue<string>("TempData");
+            //}
+
+            //Trace.WriteLine($"current is {tempData2} change finished!");
+#endif
         }
-    }
 
-    class Settings
-    {
-        public int KeyOne { get; set; }
-        public bool KeyTwo { get; set; }
-        public NestedSettings KeyThree { get; set; } = null!;
-        public string[] IPAddressRange { get; set; } = null!;
-    }
+        class Settings
+        {
+            public int KeyOne { get; set; }
+            public bool KeyTwo { get; set; }
+            public NestedSettings KeyThree { get; set; } = null!;
+            public string[] IPAddressRange { get; set; } = null!;
+        }
 
-    class NestedSettings
-    {
-        public string Message { get; set; } = null!;
-        public SupportedVersion SupportedVersions { get; set; } = null!;
-    }
+        class NestedSettings
+        {
+            public string Message { get; set; } = null!;
+            public SupportedVersion SupportedVersions { get; set; } = null!;
+        }
 
-    class SupportedVersion
-    {
-        public string v1 { get; set; }
-        public string v3 { get; set; }
+        class SupportedVersion
+        {
+            public string v1 { get; set; }
+            public string v3 { get; set; }
+        }
     }
 }
