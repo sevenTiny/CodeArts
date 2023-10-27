@@ -75,7 +75,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.EfCore.PostgreSql", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Dapper.MySql", "Demo.Dapper.MySql\Demo.Dapper.MySql.csproj", "{DA3E7F4E-ABA6-4BA9-947D-EE22F80CB560}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.NetCoreConfiguration", "Demo.NetCoreConfiguration\Demo.NetCoreConfiguration.csproj", "{0123BB02-3297-437A-B6E3-EB7844DD8F60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.NetCoreConfiguration", "Demo.NetCoreConfiguration\Demo.NetCoreConfiguration.csproj", "{0123BB02-3297-437A-B6E3-EB7844DD8F60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.MediatR", "Demo.MediatR\Demo.MediatR.csproj", "{01CDA323-A988-4C48-A642-C58CB5792C09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -207,6 +209,10 @@ Global
 		{0123BB02-3297-437A-B6E3-EB7844DD8F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0123BB02-3297-437A-B6E3-EB7844DD8F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0123BB02-3297-437A-B6E3-EB7844DD8F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01CDA323-A988-4C48-A642-C58CB5792C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01CDA323-A988-4C48-A642-C58CB5792C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01CDA323-A988-4C48-A642-C58CB5792C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01CDA323-A988-4C48-A642-C58CB5792C09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
