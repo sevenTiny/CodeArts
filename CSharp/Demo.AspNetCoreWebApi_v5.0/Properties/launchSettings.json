@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Demo.AspNetCoreWebApi_v5.0": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61895;http://localhost:61896"
+    }
+  }
+}

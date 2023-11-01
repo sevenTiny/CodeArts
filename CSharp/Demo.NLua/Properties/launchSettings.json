@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Demo.NLua": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53069;http://localhost:53076"
+    }
+  }
+}

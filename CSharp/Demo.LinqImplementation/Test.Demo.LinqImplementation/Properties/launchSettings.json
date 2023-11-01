@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Test.Demo.LinqImplementation": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53088;http://localhost:53089"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SevenTiny.GRpc.Client": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53083;http://localhost:53084"
+    }
+  }
+}
