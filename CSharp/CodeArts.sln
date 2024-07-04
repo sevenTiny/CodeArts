@@ -79,7 +79,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.NetCoreConfiguration",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.MediatR", "Demo.MediatR\Demo.MediatR.csproj", "{01CDA323-A988-4C48-A642-C58CB5792C09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.ServerSentEvents", "Demo.ServerSentEvents\Demo.ServerSentEvents.csproj", "{B150A0AB-93A3-4191-A657-72508D6F28BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.ServerSentEvents", "Demo.ServerSentEvents\Demo.ServerSentEvents.csproj", "{4A46878C-1C3C-433D-AA67-C4A0A0C22767}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -215,10 +215,10 @@ Global
 		{01CDA323-A988-4C48-A642-C58CB5792C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01CDA323-A988-4C48-A642-C58CB5792C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01CDA323-A988-4C48-A642-C58CB5792C09}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B150A0AB-93A3-4191-A657-72508D6F28BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B150A0AB-93A3-4191-A657-72508D6F28BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B150A0AB-93A3-4191-A657-72508D6F28BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B150A0AB-93A3-4191-A657-72508D6F28BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A46878C-1C3C-433D-AA67-C4A0A0C22767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A46878C-1C3C-433D-AA67-C4A0A0C22767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A46878C-1C3C-433D-AA67-C4A0A0C22767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A46878C-1C3C-433D-AA67-C4A0A0C22767}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

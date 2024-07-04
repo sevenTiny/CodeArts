@@ -1,26 +1,22 @@
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using System.Net;
+var builder = WebApplication.CreateBuilder(args);
 
-namespace Demo.ServerSentEvents
+// Add services to the container.
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
-
-            var services = builder.Services;
-
-            services.AddRouting();
-            services.AddControllers();
-
-            // Add services to the container.
-            var app = builder.Build();
-
-            app.UseRouting();
-            app.MapControllers();
-
-            app.Run();
-        }
-    }
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
