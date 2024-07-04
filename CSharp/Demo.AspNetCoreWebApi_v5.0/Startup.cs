@@ -1,4 +1,4 @@
-using Demo.AspNetCoreWebApi.Middlewares;
+锘縰sing Demo.AspNetCoreWebApi.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -45,7 +45,7 @@ namespace Demo.AspNetCoreWebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Demo.AspNetCoreWebApi v1"));
             }
 
-            #region 全局异常拦截中间件（方式一）
+            #region 脠芦戮脰脪矛鲁拢脌鹿陆脴脰脨录盲录镁拢篓路陆脢陆脪禄拢漏
             app.Use(async (ctx, next) =>
             {
                 try
@@ -59,7 +59,7 @@ namespace Demo.AspNetCoreWebApi
             });
             #endregion
 
-            #region 全局异常拦截中间件（方式二）
+            #region 脠芦戮脰脪矛鲁拢脌鹿陆脴脰脨录盲录镁拢篓路陆脢陆露镁拢漏
             //app.UseExceptionMiddleware();
             #endregion
 
