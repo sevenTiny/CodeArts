@@ -81,6 +81,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.MediatR", "Demo.Mediat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.ServerSentEvents", "Demo.ServerSentEvents\Demo.ServerSentEvents.csproj", "{4A46878C-1C3C-433D-AA67-C4A0A0C22767}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2F0891E6-02A0-45D9-B669-B7595BE7B867}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Hashids", "Demo.Hashids\Demo.Hashids.csproj", "{16C45825-53F1-425F-A3AD-2B61300E7AB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,6 +226,10 @@ Global
 		{4A46878C-1C3C-433D-AA67-C4A0A0C22767}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A46878C-1C3C-433D-AA67-C4A0A0C22767}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A46878C-1C3C-433D-AA67-C4A0A0C22767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16C45825-53F1-425F-A3AD-2B61300E7AB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16C45825-53F1-425F-A3AD-2B61300E7AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16C45825-53F1-425F-A3AD-2B61300E7AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16C45825-53F1-425F-A3AD-2B61300E7AB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
