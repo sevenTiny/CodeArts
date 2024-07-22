@@ -51,7 +51,14 @@ namespace Demo.FreeSql
                     {
                         Name = $"mike_{i}",
                         Age = i
-                    }
+                    },
+                    User2 = JObject.FromObject(new User
+                    {
+                        Name = $"json_mike_{i}",
+                        Age = i
+                    }),
+                    StrArray = ["1", "2", "3"],
+                    IntArray = [1, 2, 3]
                 });
             }
 

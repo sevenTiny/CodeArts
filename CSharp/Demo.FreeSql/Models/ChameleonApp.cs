@@ -1,5 +1,6 @@
 ﻿
 using FreeSql.DataAnnotations;
+using Newtonsoft.Json.Linq;
 
 namespace Demo.FreeSql.Models
 {
@@ -48,10 +49,16 @@ namespace Demo.FreeSql.Models
         /// </summary>
         public Type Type { get; set; }
         /// <summary>
-        /// json type
+        /// text type
         /// </summary>
         [JsonMap]
         public User User { get; set; }
+        /// <summary>
+        /// json type
+        /// </summary>
+        public JObject User2 { get; set; }
+        public string[] StrArray { get; set; }
+        public int[] IntArray { get; set; }
     }
 
     public enum Type
