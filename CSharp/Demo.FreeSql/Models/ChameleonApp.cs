@@ -1,6 +1,7 @@
 ﻿
 using FreeSql.DataAnnotations;
 using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices;
 
 namespace Demo.FreeSql.Models
 {
@@ -73,3 +74,29 @@ namespace Demo.FreeSql.Models
         public int Age { get; set; }
     }
 }
+
+/** 
+-- public.chameleonapp_2 definition
+
+-- Drop table
+
+-- DROP TABLE public.chameleonapp_2;
+
+CREATE TABLE public.chameleonapp_2 (
+	"_id" uuid NOT NULL,
+	"name" text NULL,
+	code text NULL,
+	createdby text NULL,
+	createdtime timestamptz NULL,
+	icon text NULL,
+	description text NULL,
+	isdeleted bool NOT NULL DEFAULT false,
+	"number" float8 NULL,
+	"type" int4 NULL,
+	"user" text NULL,
+	user2 jsonb NULL,
+	intarray int[] NULL,
+	strarray text[] NULL,
+	CONSTRAINT test_pkey PRIMARY KEY ("_id")
+);
+ */
