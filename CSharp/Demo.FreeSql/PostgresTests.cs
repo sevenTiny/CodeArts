@@ -17,7 +17,7 @@ namespace Demo.FreeSql
         public PostgresTests()
         {
             _fsql = new FreeSqlBuilder()
-                .UseConnectionString(DataType.PostgreSQL, @"Host=192.168.1.5;Port=5432;Username=postgres;Password=postgres123456;Database=test;ArrayNullabilityMode=Always;Pooling=true;Maximum Pool Size=2")
+                .UseConnectionString(DataType.PostgreSQL, @"Host=192.168.1.5;Port=5432;Username=postgres;Password=postgres123456;Database=postgres;ArrayNullabilityMode=Always;Pooling=true;Maximum Pool Size=2")
                 .UseNameConvert(NameConvertType.ToLower)
                 .Build();
 
@@ -245,7 +245,7 @@ namespace Demo.FreeSql
             fsql.Register("db1", () =>
             {
                 return new FreeSqlBuilder()
-                    .UseConnectionString(DataType.PostgreSQL, "Host=192.168.1.5;Port=5432;Username=postgres;Password=postgres123456;Database=test;ArrayNullabilityMode=Always;Pooling=true;Maximum Pool Size=2")
+                    .UseConnectionString(DataType.PostgreSQL, "Host=192.168.1.5;Port=5432;Username=postgres;Password=postgres123456;Database=postgres;ArrayNullabilityMode=Always;Pooling=true;Maximum Pool Size=2")
                     .UseAutoSyncStructure(false)
                     .UseNameConvert(NameConvertType.ToLower)
                     .Build();
@@ -254,7 +254,7 @@ namespace Demo.FreeSql
             fsql.Register("db1", () =>
             {
                 return new FreeSqlBuilder()
-                    .UseConnectionString(DataType.PostgreSQL, "Host=192.168.1.5;Port=5432;Username=postgres;Password=postgres123456;Database=test;ArrayNullabilityMode=Always;Pooling=true;Maximum Pool Size=2")
+                    .UseConnectionString(DataType.PostgreSQL, "Host=192.168.1.5;Port=5432;Username=postgres;Password=postgres123456;Database=postgres;ArrayNullabilityMode=Always;Pooling=true;Maximum Pool Size=2")
                     .UseAutoSyncStructure(false)
                     .UseNameConvert(NameConvertType.ToLower)
                     .Build();
