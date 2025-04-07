@@ -90,6 +90,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Hashids", "Demo.Hashid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.FreeSql", "Demo.FreeSql\Demo.FreeSql.csproj", "{195250C6-F783-4BFC-A56F-C7D258A55EAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.OCR", "Demo.OCR\Demo.OCR.csproj", "{40B9C267-5139-47F3-8374-6414DA8F0056}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -236,6 +238,10 @@ Global
 		{195250C6-F783-4BFC-A56F-C7D258A55EAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{195250C6-F783-4BFC-A56F-C7D258A55EAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{195250C6-F783-4BFC-A56F-C7D258A55EAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40B9C267-5139-47F3-8374-6414DA8F0056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40B9C267-5139-47F3-8374-6414DA8F0056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B9C267-5139-47F3-8374-6414DA8F0056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40B9C267-5139-47F3-8374-6414DA8F0056}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
