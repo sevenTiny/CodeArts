@@ -37,8 +37,11 @@ class Program
             using var img = Pix.LoadFromMemory(bytes);
             using var pageOcr = engine.Process(img);
             string text = pageOcr.GetText();
+
+            // 识别结果有点差强人意，能勉强识别，非常不准
             Console.WriteLine($"识别结果：");
             Console.WriteLine(text);
+
             // 这里可以添加代码来解析text，提取所需信息
             // 例如，使用正则表达式查找发票号码、日期等
         }
